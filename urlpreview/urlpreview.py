@@ -1,3 +1,4 @@
+from mautrix.api import HTTPAPI
 from mautrix.types import RoomID, ImageInfo
 from mautrix.util.config import BaseProxyConfig, ConfigUpdateHelper
 from maubot import Plugin, MessageEvent
@@ -41,7 +42,23 @@ class UrlpreviewBot(Plugin):
             self.log.warning(f"Error: {resp.status}")
             return None
           cont = json.loads(await resp.read())
-          msgs += "> "+str(cont.get('og:site-title', ''))+"\n> ### ["+str(cont.get('og:title', 'Open website >'))+"]("+str(url_str)+")\n> "+str(cont.get('og:description', ''))+"\n\n"
+
+          if cont.get('og:description', None) == None:
+            embed_desc = ""
+          else:
+            embed_desc = cont.get('og:description', '')
+
+          if cont.get('og:title', False):
+            msgs += "> "+str(cont.get('og:site-title', ''))+"\n> ### ["+str(cont.get('og:title', ''))+"]("+str(url_str)+")\n> "+str(embed_desc)
+          elif cont.get('og:title', True) and cont['og:image']:
+            msgs += "> "+str(cont.get('og:site-title', ''))+"\n> "+str(embed_desc)
+          
+          if cont.get('og:image', False):
+            try:
+              embed_img = HTTPAPI.get_download_url(cont.get('og:image', ''))
+            except TypeError:
+              embed_img = url_str
+            msgs += "\n> ### ![[Click to view image >]({})](".format(url_str) + str(embed_img)+")\n"
 
         if len(msgs) == 0:
             return
