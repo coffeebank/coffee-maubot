@@ -8,4 +8,6 @@ Maubot plugins by coffee ☕
 
 ### urlpreview
 
+[Download](urlpreview/releases)
+
 Bot responds with link embed, using Matrix API to fetch meta tags
