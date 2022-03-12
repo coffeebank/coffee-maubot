@@ -2,12 +2,12 @@
 
 Maubot plugins by coffee ☕
 
-[Get Maubot for your Matrix room :)](https://github.com/maubot/maubot)
+[Maubot](https://github.com/maubot/maubot) is a self-hosted, plugin-based chat bot for [Matrix](https://matrix.org).
+
+### [>>> Join our Matrix room for Support/Questions <<<](https://matrix.to/#/#coffeebank:matrix.org)
 
 <br>
 
 ### urlpreview
 
-[Download](urlpreview/releases)
-
-Bot responds with link embed, using Matrix API to fetch meta tags
+A bot that responds to links with a link preview embed, using Matrix API to fetch meta tags
