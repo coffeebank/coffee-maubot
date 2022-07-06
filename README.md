@@ -8,6 +8,10 @@ Maubot plugins by coffee ☕
 
 <br>
 
+### choose
+
+Have the bot choose for you: `[p]choose item1 | item2 | item3`
+
 ### urlpreview
 
 A bot that responds to links with a link preview embed, using Matrix API to fetch meta tags
