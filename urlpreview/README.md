@@ -24,13 +24,13 @@ Sending any link in chat will have the bot reply to your message with the link's
 
 The bot will first mark the chat as read, to indicate that it has initiated properly.
 
-If there are multiple links in the message, the bot will send up to 3 requests to matrix.org's URL preview API. If it fails due to ratelimiting, it will skip embedding that link.
+If there are multiple links in the message, the bot will send up to `max_links` (3) requests to `homeserver` (matrix.org)'s URL preview API. If it fails due to ratelimiting, it will skip embedding that link.
 
 If the link returns a 404, the bot will return an 💨 emoji on your message, to show that no results were returned.
 
 
 ## Notes
 
-- This bot uses [Synapse URL Previews](https://matrix-org.github.io/synapse/latest/development/url_previews.html) from the [matrix.org homeserver](https://app.element.io).
+- This bot uses [Synapse URL Previews](https://matrix-org.github.io/synapse/latest/setup/installation.html?highlight=url%20previews#url-previews) from the [matrix.org homeserver](https://matrix.org/legal/terms-and-conditions/).
   - To authenticate requests, it uses your bot's access token, to be provided in `appid` when you load this plugin.
 - Due to the way quoting works and the length of some embeds, line-breaks will be stripped from any `og:description` tags.
