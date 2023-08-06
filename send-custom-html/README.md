@@ -4,6 +4,11 @@ Have the bot send a message as custom HTML.
 
 ![preview.jpg](preview.jpg)
 
+## [Download >](releases)
+
+- [Join our Matrix room >](../../../#readme)
+
+<br />
 
 ## Notes
 
