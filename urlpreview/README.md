@@ -2,11 +2,11 @@
 
 A bot that responds to links with a link preview embed, using Matrix API to fetch meta tags
 
+![preview.jpg](preview.jpg)
+
 ## [Download >](releases)
 
 - [Join our Matrix room >](../../../#readme)
-
-![preview.jpg](preview.jpg)
 
 <br>
 

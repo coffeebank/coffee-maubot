@@ -2,10 +2,11 @@
 
 Have the bot send a message as custom HTML.
 
-## [Download >](releases)
-
 ![preview.jpg](preview.jpg)
 
+## [Download >](releases)
+
+<br />
 
 ## Notes
 
