@@ -6,7 +6,8 @@ Have the bot choose for you
 
 <br>
 
-- [Download >](releases)
+## [Download >](releases)
+
 - [Join our Matrix room >](../../../#readme)
 
 ![preview.jpg](preview.jpg)

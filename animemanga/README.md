@@ -6,7 +6,8 @@ Search anime, manga (manhwa/manhua), and light novels from Anilist. See series i
 
 <br>
 
-- [Download >](releases)
+## [Download >](releases)
+
 - [Join our Matrix room >](../../../#readme)
 
 ![preview.jpg](preview.jpg)
