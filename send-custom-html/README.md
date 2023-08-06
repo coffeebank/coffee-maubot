@@ -6,6 +6,8 @@ Have the bot send a message as custom HTML.
 
 ## [Download >](releases)
 
+- [Join our Matrix room >](../../../#readme)
+
 <br />
 
 ## Notes
