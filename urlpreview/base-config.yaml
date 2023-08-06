@@ -3,3 +3,4 @@ homeserver: matrix-client.matrix.org
 max_links: 3
 min_image_width: 500
 max_image_embed: 300
+no_results_react: 💨

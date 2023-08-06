@@ -15,6 +15,7 @@ class Config(BaseProxyConfig):
         helper.copy("max_links")
         helper.copy("min_image_width")
         helper.copy("max_image_embed")
+        helper.copy("no_results_react")
 
 class UrlpreviewBot(Plugin):
     async def start(self) -> None:
@@ -32,6 +33,7 @@ class UrlpreviewBot(Plugin):
         HOMESERVER = self.config["homeserver"]
         MIN_IMAGE_WIDTH = self.config["min_image_width"]
         MAX_IMAGE_EMBED = self.config["max_image_embed"]
+        NO_RESULTS_REACT = self.config["no_results_react"]
 
         await evt.mark_read()
         msgs = ""
@@ -76,6 +78,7 @@ class UrlpreviewBot(Plugin):
           count += 1 # Implement MAX_LINKS
 
         if count <= 0:
-          await evt.react("💨")
+          if NO_RESULTS_REACT:
+            await evt.react(NO_RESULTS_REACT)
           return
         await evt.reply(str(msgs), allow_html=True)
