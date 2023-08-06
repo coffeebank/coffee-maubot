@@ -29,6 +29,11 @@ Search anime, manga (manhwa/manhua), and light novels from Anilist. See series i
   - Searches for manga/manhwa/manhua and light novels using Anilist
 
 
+## Dependencies
+
+Before starting Maubot, run: `pip install` for the dependencies in [`maubot.yaml`](./maubot.yaml)
+
+
 ## Config
 
 - `results` - The number of results the bot should return
