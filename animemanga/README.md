@@ -1,6 +1,6 @@
 # animemanga
 
-Search anime, manga (manhwa/manhua/light novels), users, and characters from Anilist. See series info, status, episodes/chapters, and tags.
+Search anime, manga (manhwa/manhua), and light novels from Anilist. See series info, status, and episodes/chapters.
 
 **`[p]manga Give My Regards to Black Jack`**
 

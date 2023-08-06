@@ -8,6 +8,10 @@ Maubot plugins by coffee ☕
 
 <br>
 
+### animemanga
+
+Search anime, manga (manhwa/manhua), and light novels from Anilist. See series info, status, and episodes/chapters.
+
 ### choose
 
 Have the bot choose for you: `[p]choose item1 | item2 | item3`
