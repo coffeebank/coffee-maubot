@@ -21,6 +21,14 @@ Search anime, manga (manhwa/manhua), and light novels from Anilist. See series i
 - Media sub-types (Oneshot, Novel, ONA, etc.)
 
 
+## Commands
+
+- `anime`
+  - Searches for anime using Anilist
+- `manga`, aliases=`["manhwa", "manhua", "lightnovel", "漫画", "漫画", "만화"]`
+  - Searches for manga/manhwa/manhua and light novels using Anilist
+
+
 ## Config
 
 - `results` - The number of results the bot should return
