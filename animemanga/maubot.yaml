@@ -1,0 +1,10 @@
+maubot: 0.1.0
+id: coffee.maubot.animemanga
+version: 0.1.0.31
+license: AGPL-3.0-or-later
+modules:
+- animemanga
+main_class: AnimeMangaBot
+database: false
+extra_files:
+ - base-config.yaml

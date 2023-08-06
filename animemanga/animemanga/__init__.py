@@ -1,0 +1,1 @@
+from .animemanga import AnimeMangaBot
