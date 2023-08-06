@@ -1,0 +1,8 @@
+maubot: 0.1.0
+id: coffee.maubot.sendcustomhtml
+version: 0.1.0.3
+license: AGPL-3.0-or-later
+modules:
+- sendcustomhtml
+main_class: SendCustomHtmlBot
+database: false
