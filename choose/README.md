@@ -4,12 +4,11 @@ Have the bot choose for you
 
 **`[p]choose item1 | item2 | item3`**
 
-<br>
-
-- [Download >](releases)
-- [Join our Matrix room >](../../../#readme)
-
 ![preview.jpg](preview.jpg)
+
+## [Download >](releases)
+
+- [Join our Matrix room >](../../../#readme)
 
 <br>
 

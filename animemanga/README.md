@@ -6,12 +6,11 @@ Search anime, manga (manhwa/manhua), and light novels from Anilist. See series i
 
 **`[p]manga Give My Regards to Black Jack`**
 
-<br>
-
-- [Download >](releases)
-- [Join our Matrix room >](../../../#readme)
-
 ![preview.jpg](preview.jpg)
+
+## [Download >](releases)
+
+- [Join our Matrix room >](../../../#readme)
 
 <br>
 
