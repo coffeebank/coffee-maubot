@@ -22,7 +22,7 @@ Search anime, manga (manhwa/manhua), and light novels from Anilist. See series i
 
 Have the bot choose for you: `[p]choose item1 | item2 | item3`
 
-[**Releases >**](./tree/master/choose/releases)
+[**Releases >**](./choose/releases)
 
 <a href="./choose"><img src="./choose/preview.jpg" width="50%" /></a>
 
@@ -30,7 +30,7 @@ Have the bot choose for you: `[p]choose item1 | item2 | item3`
 
 Have the bot send a message as custom HTML.
 
-[**Releases >**](./tree/master/send-custom-html/releases)
+[**Releases >**](./send-custom-html/releases)
 
 <a href="./send-custom-html"><img src="./send-custom-html/preview.jpg" width="50%" /></a>
 
@@ -38,6 +38,6 @@ Have the bot send a message as custom HTML.
 
 A bot that responds to links with a link preview embed, using Matrix API to fetch meta tags
 
-[**Releases >**](./tree/master/urlpreview/releases)
+[**Releases >**](./urlpreview/releases)
 
 <a href="./urlpreview"><img src="./urlpreview/preview.jpg" width="50%" /></a>
