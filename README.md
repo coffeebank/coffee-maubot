@@ -8,11 +8,15 @@ Maubot plugins by coffee ☕
 
 <br>
 
-### animemanga
+## [animemanga](./tree/master/animemanga)
+
+An anime manga bot for Matrix and Element.
 
 Search anime, manga (manhwa/manhua), and light novels from Anilist. See series info, status, and episodes/chapters.
 
-[**Releases >**](./tree/master/animemanga/releases)
+### [Releases >](./tree/master/animemanga/releases)
+
+<a href="./tree/master/animemanga"><img src="./tree/master/animemanga/preview.jpg" width="50%" /></a>
 
 ### choose
 

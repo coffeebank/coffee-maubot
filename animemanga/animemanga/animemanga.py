@@ -25,13 +25,13 @@ class AnimeMangaBot(Plugin):
     async def animemanga_anime(self, evt: MessageEvent, title: str) -> None:
         number_of_results = self.config["results"]
         max_description_length = self.config["max_description_length"]
-        to_send = await matrix_anilist_embeds("ANIME", title, number_of_results, max_description_length)
-        await evt.respond(to_send)
+        to_send = await matrix_anilist_embeds(self, "ANIME", title, number_of_results, max_description_length)
+        await evt.respond(to_send, allow_html=True)
 
     @command.new("manga", aliases=["manhwa", "manhua", "lightnovel", "漫画", "漫画", "만화"], help="Searches for manga/manhwa/manhua and light novels using Anilist")
     @command.argument("title", pass_raw=True)
     async def animemanga_manga(self, evt: MessageEvent, title: str) -> None:
         number_of_results = self.config["results"]
         max_description_length = self.config["max_description_length"]
-        to_send = await matrix_anilist_embeds("MANGA", title, number_of_results, max_description_length)
-        await evt.respond(to_send)
+        to_send = await matrix_anilist_embeds(self, "MANGA", title, number_of_results, max_description_length)
+        await evt.respond(to_send, allow_html=True)

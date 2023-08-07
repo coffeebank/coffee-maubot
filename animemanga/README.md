@@ -1,5 +1,7 @@
 # animemanga
 
+An anime manga bot for Matrix.
+
 Search anime, manga (manhwa/manhua), and light novels from Anilist. See series info, status, and episodes/chapters.
 
 **`[p]manga Give My Regards to Black Jack`**
@@ -17,6 +19,7 @@ Search anime, manga (manhwa/manhua), and light novels from Anilist. See series i
 - Synopsis/summary with official sources, streaming sites, and links
 - English language titles with Native language and Romaji/Romanization support
 - Series status (Not yet released, Releasing, Finished)
+- Series preview embed images
 - Media sub-types (Oneshot, Novel, ONA, etc.)
 
 
@@ -38,8 +41,7 @@ Search anime, manga (manhwa/manhua), and light novels from Anilist. See series i
 
 - All manga/manhwa/manhua and light novel searches are categorized under "manga" by Anilist. Searches may return unexpected results.
   - A paginate feature has not yet been added. For now, you can adjust the number of `results` returned in the config.
-- Images are not yet supported.
-  - Let me know in the Matrix chat if this feature is important to you!
+- This bot is tested on Element and Cinny.
 
 ## License
 
