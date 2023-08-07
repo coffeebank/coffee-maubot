@@ -5,8 +5,6 @@ license: AGPL-3.0-or-later
 modules:
 - animemanga
 main_class: AnimeMangaBot
-dependencies:
-- markdown
 database: false
 extra_files:
  - base-config.yaml
