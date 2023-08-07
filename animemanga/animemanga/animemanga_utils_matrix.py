@@ -4,11 +4,6 @@ import datetime
 import json
 import re
 
-try:
-    import markdown
-except:
-    pass
-
 from .animemanga_utils_anilist import *
 
 def embed_new_tag(contents, tag="p", markdown=True):
@@ -24,10 +19,14 @@ def embed_new_field(name="", value="", inline=None):
         return embed_new_tag(embed_markdown(value))
 
 def embed_markdown(contents):
-    try:
-        results = markdown.markdown(contents)
-    except:
-        results = contents
+    def _markdown_replace_links(match):
+        string_part = match.group(1)
+        url_part = match.group(2)
+        return f'<a href="{url_part}">{string_part}</a>'
+    results = contents
+    # links
+    pattern_links = r'\[([^]]+)\]\((http[^)]+)\)'
+    results = re.sub(pattern_links, _markdown_replace_links, results)
     return results.replace("<p>", "").replace("</p>", "")
 
 def matrix_description_parser(description, max_description_length: int = 500):
@@ -41,7 +40,7 @@ def matrix_description_parser(description, max_description_length: int = 500):
     else:
         return description
 
-async def matrix_anilist_embeds(format: str, title: str, number_of_results: int, max_description_length: int):
+async def matrix_anilist_embeds(self, format: str, title: str, number_of_results: int, max_description_length: int):
     cmd = "MANGA"
     if format in ["anime", "Anime", "ANIME"]:
         cmd = "ANIME"
@@ -68,8 +67,8 @@ async def matrix_anilist_embeds(format: str, title: str, number_of_results: int,
             embed.append(embed_new_field(name="Links", value=am["external_links"], inline=True))
         if am["names"]:
             embed.append(embed_new_field(name="Names", value=matrix_description_parser(', '.join(am["names"])), inline=True))
-        # if am["image"]:
-        #     embed.append(f'<img src="{am["image"]}" width="300" />')
+        if am["image"]:
+            embed.append(f'<img src="{(await matrix_get_image(self, am["image"]))}" width="300" />')
 
         if cmd == "ANIME":
             embed.append(embed_new_tag(" ・ ".join(filter(None, [am["info_format"], am["time_left"], "Powered by Anilist"])), tag="h6"))
@@ -78,3 +77,11 @@ async def matrix_anilist_embeds(format: str, title: str, number_of_results: int,
 
         embeds += embed_new_tag("".join(embed), tag="blockquote", markdown=False)
     return embeds
+
+async def matrix_get_image(self, image_url: str):
+    resp = await self.http.get(image_url)
+    if resp.status != 200:
+        return None
+    og_image = await resp.read()
+    mxc = await self.client.upload_media(og_image, mime_type='image/jpg', filename="image.jpg")
+    return mxc
