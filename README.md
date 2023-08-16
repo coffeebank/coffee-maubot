@@ -24,7 +24,7 @@ A Japanese dictionary Matrix bot for searching and translating Japanese vocabula
 
 ## [send-custom-html](./send-custom-html)
 
-Have the bot send a message as custom HTML.
+Have the bot send a message as custom HTML. Test and preview formatted HTML body in Matrix.
 
 ## [urlpreview](./urlpreview)
 
