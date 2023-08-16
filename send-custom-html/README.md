@@ -1,6 +1,6 @@
 # send-custom-html
 
-Have the bot send a message as custom HTML.
+Have the bot send a message as custom HTML. Test and preview formatted HTML body in Matrix.
 
 ![preview.jpg](preview.jpg)
 
@@ -9,6 +9,16 @@ Have the bot send a message as custom HTML.
 - [Join our Matrix room >](../../../#readme)
 
 <br />
+
+
+## Commands
+
+- `sendcustomhtml`
+  - Have the bot send a message as custom HTML.
+
+## Config
+
+- `whitelist` - List of approved users that can run sendcustomhtml command
 
 ## Notes
 
