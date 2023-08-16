@@ -18,6 +18,10 @@ Search anime, manga (manhwa/manhua), and light novels from Anilist. See series i
 
 Have the bot choose for you: `[p]choose item1 | item2 | item3`
 
+## [jadict](./jadict)
+
+A Japanese dictionary Matrix bot for searching and translating Japanese vocabulary. Searches Jisho using Jisho API.
+
 ## [send-custom-html](./send-custom-html)
 
 Have the bot send a message as custom HTML.
