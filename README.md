@@ -26,6 +26,10 @@ A Japanese dictionary Matrix bot for searching and translating Japanese vocabula
 
 Have the bot send a message as custom HTML. Test and preview formatted HTML body in Matrix.
 
+## [timein](./timein)
+
+Get the time in specific cities. Check timezones.  !timein New York  (Python 3.9+) (Python <3.9 requires pytz, fuzzywuzzy)
+
 ## [urlpreview](./urlpreview)
 
 A bot that responds to links with a link preview embed, using Matrix API to fetch meta tags
