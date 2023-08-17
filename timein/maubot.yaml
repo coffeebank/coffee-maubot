@@ -1,0 +1,11 @@
+maubot: 0.1.0
+id: coffee.maubot.timein
+version: 0.1.0.6
+license: AGPL-3.0-or-later
+modules:
+- timein
+main_class: TimeinBot
+database: false
+dependencies:
+- pytz
+- fuzzywuzzy
