@@ -16,7 +16,7 @@ A bot that responds to links with a link preview embed, using Matrix API to fetc
 - `appid` - Your bot's access token. This is needed to make the request to matrix.org's URL preview API.
 - `homeserver` - Your homeserver (matrix-client.matrix.org by default, don't add https in front)
 - `max_links` - Change how many links you'd like to process per message. 1-3 is recommended.
-- `min_image_width` - Change the minimum image width before the bot sends an image. 500 is recommended to avoid favicons.
+- `min_image_width` - Change the minimum image width before the bot sends an image. 500 is recommended to avoid favicons but 479 or lower is required for Youtube previews.
 - `max_image_embed` - Change the maximum image width displayed in the embed. 300 is recommended.
 - `no_results_react` - Adds a reaction emoji to the message to show that no results were returned. Put `''` to disable.
 
