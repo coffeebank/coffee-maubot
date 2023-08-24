@@ -4,6 +4,8 @@ from mautrix.types.event.message import BaseFileInfo, Format, TextMessageEventCo
 from mautrix.util.config import BaseProxyConfig, ConfigUpdateHelper
 from maubot import Plugin, MessageEvent
 from maubot.handlers import command
+
+from html.parser import HTMLParser
 import json
 from typing import List, Type
 import urllib.parse
@@ -11,13 +13,58 @@ import urllib.parse
 
 class Config(BaseProxyConfig):
     def do_update(self, helper: ConfigUpdateHelper) -> None:
-        helper.copy("appid")
-        helper.copy("homeserver")
         helper.copy("max_links")
-        helper.copy("min_image_width")
         helper.copy("max_image_embed")
         helper.copy("no_results_react")
 
+def fetch_meta_content(attrs, attr_to_find):
+    # <meta property="" content="" />
+    is_meta_og = False
+    for attr, value in attrs:
+        if attr in ["property", "name"] and value == attr_to_find:
+            for attr_2, value_2 in attrs:
+                if attr_2 == "content":
+                    print(attr_to_find, value_2)
+                    return str(value_2)
+    return None
+
+async def matrix_get_image(self, image_url: str, mime_type: str="image/jpg", filename: str="image.jpg"):
+    resp = await self.http.get(image_url)
+    if resp.status != 200:
+        return None
+    og_image = await resp.read()
+    mxc = await self.client.upload_media(og_image, mime_type=mime_type, filename=filename)
+    return mxc
+
+class ExtractMetaTags(HTMLParser):
+    og = {
+        "title": None,
+        "description": None,
+        "image": None,
+    }
+
+    def __init__(self):
+        HTMLParser.__init__(self)
+
+    def handle_starttag(self, tag, attrs):
+        if tag == "meta":
+            title = fetch_meta_content(attrs, "og:title")
+            if title is None:
+                title = fetch_meta_content(attrs, "title")
+            if title is not None:
+                self.og["title"] = title
+
+            description = fetch_meta_content(attrs, "og:description")
+            if description is None:
+                description = fetch_meta_content(attrs, "description")
+            if description is not None:
+                self.og["description"] = description
+
+            image = fetch_meta_content(attrs, "twitter:image")
+            if image is None:
+                image = fetch_meta_content(attrs, "og:image")
+            if image is not None:
+                self.og["image"] = image
 
 class UrlpreviewBot(Plugin):
     async def start(self) -> None:
@@ -30,10 +77,7 @@ class UrlpreviewBot(Plugin):
 
     @command.passive("(https:\/\/[\S]+)", multiple=True)
     async def handler(self, evt: MessageEvent, matches: List[str]) -> None:
-        appid = self.config["appid"]
         MAX_LINKS = self.config["max_links"]
-        HOMESERVER = self.config["homeserver"]
-        MIN_IMAGE_WIDTH = self.config["min_image_width"]
         MAX_IMAGE_EMBED = self.config["max_image_embed"]
         NO_RESULTS_REACT = self.config["no_results_react"]
 
@@ -43,47 +87,57 @@ class UrlpreviewBot(Plugin):
         for _, url_str in matches:
             if count >= MAX_LINKS:
                 break
+            if count >= MAX_LINKS:
+                break
 
-            url_params = urllib.parse.urlencode({"i": url_str, "appid": appid})
-            embed_content = f"https://{HOMESERVER}/_matrix/media/r0/preview_url?url={url_str}"
-            resp = await self.http.get(embed_content, headers={"Authorization": "Bearer {}".format(appid)})
+            resp = await self.http.get(url_str)
 
             # Guard clause
             if resp.status != 200:
                 continue
-            cont = json.loads(await resp.read())
+            parser = ExtractMetaTags()
+            parser.og = {
+                "title": None,
+                "description": None,
+                "image": None
+            }
 
-            # embed_site_title = ""
-            # if cont.get("og:site-title", None):
-            #   embed_site_title = "<em>"+cont.get("og:site-title", "")+"</em>"
+            # Images
+            image_types = ["image/gif", "image/jpg", "image/jpeg", "image/png", "image/webp"]
+            if resp.content_type in image_types:
+                image_mxc = await matrix_get_image(self, url_str, mime_type=resp.content_type, filename=resp.content_type.replace('/', '.'))
+                image = f'<a href="{url_str}"><img src="{image_mxc}" alt="{resp.content_type}" /></a>'
+                msgs += f"<blockquote>{image}</blockquote>"
+                count += 1 # Implement MAX_LINKS
+                continue
 
-            title = None
-            if cont.get("og:title", None):
-                title = f'<h3><a href="{url_str}">{cont.get("og:title", "")}</a></h3>'
-            elif cont.get("og:site-title", None):
-                title = f'<h3><a href="{url_str}">{cont.get("og:site-title", "")}</a></h3>'
+            # HTML
+            cont = await resp.text()
+            parser.feed(cont)
 
-            description = None
-            if cont.get("og:description", None):
-                description = '<p>' + \
-                    str(cont.get('og:description', '')).replace(
-                        '\r', ' ').replace('\n', ' ')+'</p>'
+            title = parser.og["title"]
+            if title:
+                title = f'<h3><a href="{url_str}">{title}</a></h3>'
 
-            image = None
-            if cont.get("og:image", None):
-                if (MIN_IMAGE_WIDTH <= 0) or (cont.get("og:image:width", None) and cont.get("og:image:width", 0) > MIN_IMAGE_WIDTH):
-                    mauApi = mautrix.api.HTTPAPI("https://"+HOMESERVER)
-                    image_url = str(mauApi.get_download_url(
-                        cont.get('og:image', None)))
-                    image = f'<a href="{image_url}"><img src="{cont.get("og:image", None)}" width="{MAX_IMAGE_EMBED}" alt="Banner image" /></a>'
+            description = parser.og["description"]
+            if description:
+                description = '<p>'+str(description).replace('\r', ' ').replace('\n', ' ')+'</p>'
 
-            msgs += "<blockquote>"
-            msgs += "".join(filter(None, [title, description, image]))
-            msgs += "</blockquote>"
-            count += 1  # Implement MAX_LINKS
+            image = parser.og["image"]
+            if image:
+                image_mxc = await matrix_get_image(self, image)
+                image = f'<a href="{image}"><img src="{image_mxc}" width="{MAX_IMAGE_EMBED}" alt="Banner image" /></a>'
+
+            embed_contents = "".join(filter(None, [title, description, image]))
+            if embed_contents:
+                msgs += f"<blockquote>{embed_contents}</blockquote>"
+                count += 1 # Implement MAX_LINKS
 
         if count <= 0:
             if NO_RESULTS_REACT:
-                await evt.react(NO_RESULTS_REACT)
+                try:
+                    await evt.react(NO_RESULTS_REACT)
+                except: # Silently ignore if react doesn't work
+                    pass
             return
         await evt.reply(str(msgs), allow_html=True)
