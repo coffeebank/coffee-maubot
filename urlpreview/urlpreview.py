@@ -10,6 +10,7 @@ import json
 from typing import List, Type
 import urllib.parse
 
+
 class Config(BaseProxyConfig):
     def do_update(self, helper: ConfigUpdateHelper) -> None:
         helper.copy("max_links")
@@ -84,6 +85,8 @@ class UrlpreviewBot(Plugin):
         msgs = ""
         count = 0
         for _, url_str in matches:
+            if count >= MAX_LINKS:
+                break
             if count >= MAX_LINKS:
                 break
 
