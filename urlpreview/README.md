@@ -38,17 +38,4 @@ If the link returns a 404, the bot will return an emoji `no_results_react` (💨
 
 ### Known popular sites that won't work
 
-- `reddit.com` - Use `old.reddit.com`
-
-<br />
-
-## (Archived) v0.1
-
-- This bot uses [Synapse URL Previews](https://matrix-org.github.io/synapse/latest/setup/installation.html?highlight=url%20previews#url-previews) from the [matrix.org homeserver](https://matrix.org/legal/terms-and-conditions/).
-  - To authenticate requests, it uses your bot's access token, to be provided in `appid` when you load this plugin.
-  - `appid` - Your bot's access token. This is needed to make the request to matrix.org's URL preview API.
-  - `homeserver` - Your homeserver (matrix-client.matrix.org by default, don't add https in front)
-  - `max_links` - Change how many links you'd like to process per message. 1-3 is recommended.
-  - `min_image_width` - Change the minimum image width before the bot sends an image. 500 is recommended to avoid favicons.
-  - `max_image_embed` - Change the maximum image width displayed in the embed. 300 is recommended.
-  - `no_results_react` - Adds a reaction emoji to the message to show that no results were returned. Put `''` to disable.
+- `reddit.com` - Use `old.reddit.com` instead
