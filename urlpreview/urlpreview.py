@@ -19,12 +19,10 @@ class Config(BaseProxyConfig):
 
 def fetch_meta_content(attrs, attr_to_find):
     # <meta property="" content="" />
-    is_meta_og = False
     for attr, value in attrs:
         if attr in ["property", "name"] and value == attr_to_find:
             for attr_2, value_2 in attrs:
                 if attr_2 == "content":
-                    print(attr_to_find, value_2)
                     return str(value_2)
     return None
 
