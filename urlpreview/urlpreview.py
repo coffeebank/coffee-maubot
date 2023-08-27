@@ -75,7 +75,8 @@ class UrlpreviewBot(Plugin):
     def get_config_class(cls) -> Type[BaseProxyConfig]:
         return Config
 
-    @command.passive("(https:\/\/[\S]+)", multiple=True)
+    # RFC 3986 excluding: (), []
+    @command.passive("(https:\/\/[A-Za-z0-9\-._~:\/?#@!$&'*+,;=%]+)", multiple=True)
     async def handler(self, evt: MessageEvent, matches: List[str]) -> None:
         MAX_LINKS = self.config["max_links"]
         MAX_IMAGE_EMBED = self.config["max_image_embed"]
