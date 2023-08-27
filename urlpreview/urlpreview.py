@@ -28,7 +28,7 @@ def fetch_meta_content(attrs, attr_to_find):
                     return str(value_2)
     return None
 
-async def matrix_get_image(self, image_url: str, mime_type: str="image/jpg", filename: str="image.jpg"):
+async def matrix_get_image(self, image_url: str, mime_type: str="image/jpeg", filename: str="image.jpg"):
     resp = await self.http.get(image_url)
     if resp.status != 200:
         return None
@@ -105,7 +105,7 @@ class UrlpreviewBot(Plugin):
             # Images
             image_types = ["image/gif", "image/jpg", "image/jpeg", "image/png", "image/webp"]
             if resp.content_type in image_types:
-                image_mxc = await matrix_get_image(self, url_str, mime_type=resp.content_type, filename=resp.content_type.replace('/', '.'))
+                image_mxc = await matrix_get_image(self, url_str, mime_type=resp.content_type, filename=resp.content_type.replace('/', '.').replace('jpeg', 'jpg'))
                 image = f'<a href="{url_str}"><img src="{image_mxc}" alt="{resp.content_type}" /></a>'
                 msgs += f"<blockquote>{image}</blockquote>"
                 count += 1 # Implement MAX_LINKS
