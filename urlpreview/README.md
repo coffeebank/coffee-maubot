@@ -39,9 +39,21 @@ If the link returns a 404, the bot will return an emoji `no_results_react` (💨
 
 ## Notes
 
-- This bot fetches HTML from the bot's host server, which may leak your bot's host server IP.
-  - Some sites protected by Cloudflare/similar services may not return results.
-- This bot optionally uses [Synapse URL Previews](https://matrix-org.github.io/synapse/latest/setup/installation.html?highlight=url%20previews#url-previews) from the [matrix.org homeserver](https://matrix.org/legal/terms-and-conditions/).
-  - To authenticate requests, it uses your bot's access token, to be provided in `appid` when you load this plugin.
+- This bot comes with two parsers: `htmlparser` and `synapse`. By default, both are enabled.
+- You can control which ones to enable/disable or prioritize using `EXT_ENABLED` (last in array takes priority).
+
+### htmlparser
+
+- `htmlparser` works out-of-the-box by directly fetching the HTML page and parsing using `htmlparser` (built-in).
+- This may leak your server's IP, and is recommended for bots hosted in a VPS/server environment.
+- Some sites protected by Cloudflare/similar services may not return results.
+
+### synapse
+
+- `synapse` depends on [Synapse URL Previews](https://matrix-org.github.io/synapse/latest/setup/installation.html?highlight=url%20previews#url-previews) from the [matrix.org homeserver](https://matrix.org/legal/terms-and-conditions/).
+- `synapse` requires you to specify an `appid` and `homeserver` that runs Synapse and supports URL Previews.
+
+<br />
+
 - Due to the length of some embeds, line-breaks are stripped from any `og:description` tags.
 - Image width is hardcoded at `max_image_embed` px wide. There may be an option in the future to install a dependency that'll parse image height.

@@ -12,7 +12,6 @@ from .urlpreview_utils import *
 from .urlpreview_ext_htmlparser import *
 from .urlpreview_ext_synapse import *
 
-EXT_ENABLED = ["synapse", "htmlparser"]
 EXT_ARR = {
   "htmlparser": fetch_htmlparser,
   "synapse": fetch_synapse
@@ -20,6 +19,7 @@ EXT_ARR = {
 
 class Config(BaseProxyConfig):
     def do_update(self, helper: ConfigUpdateHelper) -> None:
+        helper.copy("ext_enabled")
         helper.copy("appid")
         helper.copy("homeserver")
         helper.copy("max_links")
@@ -46,6 +46,7 @@ class UrlPreviewBot(Plugin):
         if user_check_blacklist(evt.sender, USER_BLACKLIST):
             return
 
+        EXT_ENABLED = self.config["ext_enabled"]
         appid = self.config["appid"]
         MAX_LINKS = self.config["max_links"]
         HOMESERVER = self.config["homeserver"]
@@ -68,7 +69,7 @@ class UrlPreviewBot(Plugin):
                 self.log.exception(f"[urlpreview] WARNING: {evt.sender} tried to access blacklisted IP: {str(unsafe_url)}")
                 continue
 
-            og = await fetch_all(self, url_str, appid, HOMESERVER)
+            og = await fetch_all(self, url_str, EXT_ENABLED, appid, HOMESERVER)
             embed = await embed_url_preview(self, url_str, og, MAX_IMAGE_EMBED)
             if embed is not None:
                 embeds.append(embed)
@@ -88,7 +89,7 @@ class UrlPreviewBot(Plugin):
 
 # Utility Commands
 
-async def fetch_all(self, url_str, appid: str='', homeserver: str='matrix-client.matrix.org'):
+async def fetch_all(self, url_str, EXT_ENABLED, appid: str='', homeserver: str='matrix-client.matrix.org'):
     final_og = {}
     for ext in EXT_ENABLED:
         try:
