@@ -96,8 +96,10 @@ class UrlPreviewBot(Plugin):
 
         embeds = []
         count = 0
+        max_count = 0
         for _, unsafe_url in matches:
-            if count >= MAX_LINKS:
+            # Break when MAX_LINKS embeds, or processed MAX_LINKS*5 links
+            if count >= MAX_LINKS or max_count >= MAX_LINKS*5:
                 break
             # Check URL_BLACKLIST
             url_str = url_check_blacklist(unsafe_url, URL_BLACKLIST)
@@ -110,6 +112,7 @@ class UrlPreviewBot(Plugin):
             if embed is not None:
                 embeds.append(embed)
                 count += 1 # Implement MAX_LINKS
+            max_count += 1
 
         if len(embeds) <= 0:
             if NO_RESULTS_REACT:
