@@ -90,9 +90,13 @@ class UrlPreviewBot(Plugin):
 
         embeds = []
         count = 0
-        for _, url_str in matches:
+        for _, unsafe_url in matches:
             if count >= MAX_LINKS:
                 break
+            url_str = url_check_blacklist(unsafe_url, URL_BLACKLIST)
+            if url_str is None:
+                self.log.exception(f"[urlpreview] WARNING: {evt.sender} tried to access blacklisted IP: {str(unsafe_url)}")
+                continue
 
             og = await fetch_all(self, url_str, appid, HOMESERVER)
             embed = await embed_url_preview(self, url_str, og, MAX_IMAGE_EMBED)

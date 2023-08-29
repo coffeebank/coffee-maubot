@@ -7,13 +7,17 @@ from .urlpreview_utils import *
 
 async def fetch_htmlparser(
     self,
-    url_str: str,
+    url_str,
     *args
 ):
+    if not url_str:
+        return None
+
     try:
         resp = await self.http.get(url_str)
     except Exception as err:
         self.log.exception(f"[urlpreview] [ext_htmlparser] Error: {str(err)} - {str(urlparse(url_str).netloc)}")
+        return None
 
     # Guard clause
     if resp.status != 200:

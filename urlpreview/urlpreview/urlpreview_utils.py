@@ -1,3 +1,5 @@
+import ipaddress
+import socket
 import urllib.parse
 from urllib.parse import urlparse
 
@@ -90,3 +92,37 @@ async def matrix_get_image(self, image_url: str, mime_type: str="image/jpeg", fi
         self.log.exception(f"[urlpreview] [utils] Error matrix_get_image client.upload_media: {str(err)}")
         return None
     return mxc
+
+def url_check_is_in_range(ip, ranges):
+    for r in ranges:
+        if ipaddress.ip_address(ip) in ipaddress.ip_network(r, strict=False):
+            return True
+    return False
+
+def url_get_ip_from_hostname(hostname):
+    # ipv4
+    try:
+        return socket.gethostbyname(hostname)
+    except socket.gaierror:
+        pass
+    # ipv6
+    try:
+        answers = socket.getaddrinfo(hostname, Name, socket.AF_INET6)
+        for answer in answers:
+            if answer[1] == socket.SOCK_STREAM:
+                return answer[4][0]
+    except (socket.gaierror, IndexError):
+        pass
+    return None
+
+def url_check_blacklist(url, blacklist):
+    if "://" not in url:
+        url = "http://" + url
+    hostname = urlparse(url).netloc
+    ip = url_get_ip_from_hostname(hostname)
+    if not ip:
+        return False
+    is_blacklisted = url_check_is_in_range(ip, blacklist)
+    if not is_blacklisted:
+        return url
+    return None

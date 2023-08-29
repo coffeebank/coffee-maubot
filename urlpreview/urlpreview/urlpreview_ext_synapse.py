@@ -12,13 +12,15 @@ from urllib.parse import urlparse
 
 async def fetch_synapse(
     self,
-    url_str: str,
+    url_str,
     appid: str,
     homeserver: str="matrix-client.matrix.org",
     *args
 ):
     # No API key
     if appid in ["BOT_ACCESS_TOKEN", None]:
+        return None
+    if not url_str:
         return None
 
     url_params = urllib.parse.urlencode({"i": url_str, "appid": appid})
@@ -27,6 +29,7 @@ async def fetch_synapse(
         resp = await self.http.get(embed_content, headers={"Authorization":"Bearer {}".format(appid)})
     except Exception as err:
         self.log.exception(f"[urlpreview] [ext_synapse] Error: {str(err)} - {str(urlparse(url_str).netloc)}")
+        return None
 
     # Guard clause
     if resp.status != 200:
