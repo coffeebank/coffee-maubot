@@ -48,7 +48,9 @@ async def embed_url_preview(self, url_str, og, max_image_embed: int=300):
     if all(v is None for v in og):
         return None
 
-    image_mxc = await process_image(self, og.get('image', None), og.get('content_type', None))
+    image_mxc = og.get('image_mxc', None)
+    if image_mxc is None:
+        image_mxc = await process_image(self, og.get('image', None), og.get('content_type', None))
 
     # Only contains image
     if check_all_none_except(og, ['image', 'content_type']):

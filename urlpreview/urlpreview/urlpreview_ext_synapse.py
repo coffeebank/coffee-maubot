@@ -37,14 +37,14 @@ async def fetch_synapse(
         return None
 
     cont = json.loads(await resp.read())
-    # self.log.info("fetch_synapse cont "+str(cont))
     final_og = {
         "title": synapse_format_title(cont),
         "description": synapse_format_description(cont),
         "image": synapse_format_image(cont),
+        "image_mxc": synapse_format_image(cont),
         "content_type": None,
     }
-    self.log.debug("fetch_synapse "+str(final_og))
+    self.log.debug(f"[urlpreview] [ext_synapse] fetch_synapse {str(final_og)}")
     return final_og
 
 def synapse_format_title(cont):

@@ -30,6 +30,7 @@ async def fetch_htmlparser(
             "title": None,
             "description": None,
             "image": url_str,
+            "image_mxc": None,
             "content_type": resp.content_type,
         }
 
@@ -38,7 +39,7 @@ async def fetch_htmlparser(
     cont = await resp.text()
     parser.feed(cont)
     parser.og["content_type"] = await check_image_content_type(self, parser.og["image"])
-    self.log.debug("fetch_htmlparser "+str(parser.og))
+    self.log.debug(f"[urlpreview] [ext_htmlparser] fetch_htmlparser {str(parser.og)}")
     return parser.og
 
 def fetch_meta_content(attrs, attr_to_find):
@@ -55,6 +56,7 @@ class ExtractMetaTags(HTMLParser):
         "title": None,
         "description": None,
         "image": None,
+        "image_mxc": None,
         "content_type": None,
     }
 
