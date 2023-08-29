@@ -21,7 +21,7 @@ async def fetch_htmlparser(
 
     # Guard clause
     if resp.status != 200:
-        self.log.exception(f"[urlpreview] [ext_htmlparser] Error: {str(urlparse(url_str).netloc)} returned status {str(resp.status)}")
+        self.log.exception(f"[urlpreview] [ext_htmlparser] Error: Status {str(resp.status)} - {str(urlparse(url_str).netloc)}")
         return None
 
     # Images
