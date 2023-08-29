@@ -32,4 +32,4 @@ Get the time in specific cities. Check timezones.  !timein New York  (Python 3.9
 
 ## [urlpreview](./urlpreview)
 
-A bot that responds to links with a link preview embed, fetching meta tags directly
+A bot that responds to links with a link preview embed, using Matrix API to fetch meta tags

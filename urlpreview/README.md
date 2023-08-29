@@ -13,6 +13,7 @@ A bot that responds to links with a link preview embed, using Matrix API to fetc
 
 ## Config
 
+- `ext_enabled` - Change which data sources to use for meta tags (last in array takes priority)
 - `max_links` - Change how many links you'd like to process per message. 1-3 is recommended.
 - `max_image_embed` - Change the maximum image width displayed in the embed. 300 is recommended.
 - `no_results_react` - Adds a reaction emoji to the message to show that no results were returned. Put `''` to disable.
@@ -23,7 +24,7 @@ This is optional, but highly recommended for a better experience.
 
 - `appid` - Your bot's access token. This is needed to make the request to the Matrix Synapse URL Preview API.
 - `homeserver` - Your homeserver (matrix-client.matrix.org by default, don't add https in front)
-- ~~`min_image_width` - Change the minimum image width before the bot sends an image. 500 is recommended to avoid favicons.~~
+- ~~`min_image_width` - Change the minimum image width before the bot sends an image. 475 is recommended to avoid favicons. (To be restored soon)~~
 
 
 ## Usage
@@ -40,7 +41,7 @@ If the link returns a 404, the bot will return an emoji `no_results_react` (💨
 ## Notes
 
 - This bot comes with two parsers: `htmlparser` and `synapse`. By default, both are enabled.
-- You can control which ones to enable/disable or prioritize using `EXT_ENABLED` (last in array takes priority).
+- You can control which ones to enable/disable or prioritize using `ext_enabled` (last in array takes priority).
 
 ### htmlparser
 
