@@ -13,3 +13,5 @@ url_blacklist:
  - "fc00::/7"
  - "3fff:ffff:ffff:ffff:ffff:ffff:ffff:ffff"
  - "2001:800::/21"
+user_blacklist:
+ - '@user:example.com'

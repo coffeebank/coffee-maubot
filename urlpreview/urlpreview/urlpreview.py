@@ -27,6 +27,7 @@ class Config(BaseProxyConfig):
         helper.copy("max_image_embed")
         helper.copy("no_results_react")
         helper.copy("url_blacklist")
+        helper.copy("user_blacklist")
 
 async def fetch_all(self, url_str, appid: str='', homeserver: str='matrix-client.matrix.org'):
     final_og = {}
@@ -79,6 +80,11 @@ class UrlPreviewBot(Plugin):
     # RFC 3986 excluding: (), []
     @command.passive("(https:\/\/[A-Za-z0-9\-._~:\/?#@!$&'*+,;=%]+)", multiple=True)
     async def handler(self, evt: MessageEvent, matches: List[str]) -> None:
+        # Check USER_BLACKLIST
+        USER_BLACKLIST = self.config["user_blacklist"]
+        if user_check_blacklist(evt.sender, USER_BLACKLIST):
+            return
+
         appid = self.config["appid"]
         MAX_LINKS = self.config["max_links"]
         HOMESERVER = self.config["homeserver"]
@@ -93,6 +99,7 @@ class UrlPreviewBot(Plugin):
         for _, unsafe_url in matches:
             if count >= MAX_LINKS:
                 break
+            # Check URL_BLACKLIST
             url_str = url_check_blacklist(unsafe_url, URL_BLACKLIST)
             if url_str is None:
                 self.log.exception(f"[urlpreview] WARNING: {evt.sender} tried to access blacklisted IP: {str(unsafe_url)}")
@@ -112,4 +119,4 @@ class UrlPreviewBot(Plugin):
                     pass
             return
         to_send = "".join(embeds)
-        await evt.reply(to_send, allow_html=True)
+        return await evt.reply(to_send, allow_html=True)

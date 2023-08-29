@@ -126,3 +126,8 @@ def url_check_blacklist(url, blacklist):
     if not is_blacklisted:
         return url
     return None
+
+def user_check_blacklist(user, blacklist):
+    if user in blacklist:
+        return True
+    return False

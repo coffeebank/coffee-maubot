@@ -1,6 +1,6 @@
 maubot: 0.1.0
 id: coffee.maubot.urlpreview
-version: 0.3.0.338
+version: 0.3.0.348
 license: AGPL-3.0-or-later
 modules:
 - urlpreview
