@@ -52,16 +52,15 @@ def fetch_meta_content(attrs, attr_to_find):
     return None
 
 class ExtractMetaTags(HTMLParser):
-    og = {
-        "title": None,
-        "description": None,
-        "image": None,
-        "image_mxc": None,
-        "content_type": None,
-    }
-
     def __init__(self):
         HTMLParser.__init__(self)
+        self.og = {
+            "title": None,
+            "description": None,
+            "image": None,
+            "image_mxc": None,
+            "content_type": None,
+        }
 
     def handle_starttag(self, tag, attrs):
         if tag == "meta":
