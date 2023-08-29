@@ -39,7 +39,7 @@ class UrlPreviewBot(Plugin):
         return Config
 
     # RFC 3986 excluding: (), []
-    @command.passive("(https:\/\/[A-Za-z0-9\-._~:\/?#@!$&'*+,;=%]+)", multiple=True)
+    @command.passive("(https?:\/\/[A-Za-z0-9\-._~:\/?#@!$&'*+,;=%]+)", multiple=True)
     async def handler(self, evt: MessageEvent, matches: List[str]) -> None:
         # Check USER_BLACKLIST
         USER_BLACKLIST = self.config["user_blacklist"]
