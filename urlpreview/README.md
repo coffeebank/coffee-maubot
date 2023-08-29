@@ -1,6 +1,6 @@
 # urlpreview
 
-A bot that responds to links with a link preview embed, fetching meta tags directly
+A bot that responds to links with a link preview embed, using Matrix API to fetch meta tags
 
 ![preview.jpg](preview.jpg)
 
@@ -13,9 +13,18 @@ A bot that responds to links with a link preview embed, fetching meta tags direc
 
 ## Config
 
+- `ext_enabled` - Change which data sources to use for meta tags (last in array takes priority)
 - `max_links` - Change how many links you'd like to process per message. 1-3 is recommended.
 - `max_image_embed` - Change the maximum image width displayed in the embed. 300 is recommended.
 - `no_results_react` - Adds a reaction emoji to the message to show that no results were returned. Put `''` to disable.
+
+### Matrix Synapse URL Previews API
+
+This is optional, but highly recommended for a better experience.
+
+- `appid` - Your bot's access token. This is needed to make the request to the Matrix Synapse URL Preview API.
+- `homeserver` - Your homeserver (matrix-client.matrix.org by default, don't add https in front)
+- ~~`min_image_width` - Change the minimum image width before the bot sends an image. 475 is recommended to avoid favicons. (To be restored soon)~~
 
 
 ## Usage
@@ -31,11 +40,21 @@ If the link returns a 404, the bot will return an emoji `no_results_react` (💨
 
 ## Notes
 
-- This bot fetches HTML from the bot's host server, which may leak your bot's host server IP.
+- This bot comes with two parsers: `htmlparser` and `synapse`. By default, both are enabled.
+- You can control which ones to enable/disable or prioritize using `ext_enabled` (last in array takes priority).
+
+### htmlparser
+
+- `htmlparser` works out-of-the-box by directly fetching the HTML page and parsing using `htmlparser` (built-in).
+- This may leak your server's IP, and is recommended for bots hosted in a VPS/server environment.
 - Some sites protected by Cloudflare/similar services may not return results.
+
+### synapse
+
+- `synapse` depends on [Synapse URL Previews](https://matrix-org.github.io/synapse/latest/setup/installation.html?highlight=url%20previews#url-previews) from the [matrix.org homeserver](https://matrix.org/legal/terms-and-conditions/).
+- `synapse` requires you to specify an `appid` and `homeserver` that runs Synapse and supports URL Previews.
+
+<br />
+
 - Due to the length of some embeds, line-breaks are stripped from any `og:description` tags.
 - Image width is hardcoded at `max_image_embed` px wide. There may be an option in the future to install a dependency that'll parse image height.
-
-### Known popular sites that won't work
-
-- `reddit.com` - Use `old.reddit.com` instead
