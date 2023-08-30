@@ -5,23 +5,19 @@ import urllib.parse
 
 from .urlpreview_utils import *
 
-async def fetch_htmlparser(
-    self,
-    url_str,
-    *args
-):
+async def fetch_htmlparser(self, url_str, **kwargs):
     if not url_str:
         return None
 
     try:
-        resp = await self.http.get(url_str)
+        resp = await self.http.get(url_str, timeout=30) # 30s timeout matches Matrix Synapse
     except Exception as err:
         self.log.exception(f"[urlpreview] [ext_htmlparser] Error: {str(err)} - {str(urlparse(url_str).netloc)}")
         return None
 
     # Guard clause
     if resp.status != 200:
-        self.log.exception(f"[urlpreview] [ext_htmlparser] Error: Status {str(resp.status)} - {str(urlparse(url_str).netloc)}")
+        self.log.exception(f"[urlpreview] [ext_htmlparser] Error: Status {str(resp.status)} - {str(urlparse(url_str).netloc)} - {str(resp)}")
         return None
 
     # Images

@@ -26,6 +26,12 @@ This is optional, but highly recommended for a better experience.
 - `homeserver` - Your homeserver (matrix-client.matrix.org by default, don't add https in front)
 - ~~`min_image_width` - Change the minimum image width before the bot sends an image. 475 is recommended to avoid favicons. (To be restored soon)~~
 
+### Upgrade Guide
+
+If your Config is missing some entries above, in your Maubot Manager's Instances, please click "Save" (even with no changes) to force-update the default Config values.
+
+To reset to default values, delete the whole line (ie. to reset `ext_enabled`, delete the whole `ext_enabled: []` line) and click "Save".
+
 
 ## Usage
 
@@ -51,8 +57,10 @@ If the link returns a 404, the bot will return an emoji `no_results_react` (💨
 
 ### synapse
 
-- `synapse` depends on [Synapse URL Previews](https://matrix-org.github.io/synapse/latest/setup/installation.html?highlight=url%20previews#url-previews) from the [matrix.org homeserver](https://matrix.org/legal/terms-and-conditions/).
+- `synapse` depends on the [Matrix Synapse URL Previews API](https://matrix-org.github.io/synapse/latest/setup/installation.html?highlight=url%20previews#url-previews).
 - `synapse` requires you to specify an `appid` and `homeserver` that runs Synapse and supports URL Previews.
+- Synapse URL Previews works best with the default [matrix.org homeserver](https://matrix.org/legal/terms-and-conditions/).
+  - Some homeservers return 404s at an increased rate. You can check your homeserver's acceptance [on Hoppscotch *(update BOT_ACCESS_TOKEN in Headers)*](https://hopp.sh/r/wpEdCHsQ8YHM)
 
 <br />
 
