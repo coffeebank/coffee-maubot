@@ -69,7 +69,7 @@ class UrlPreviewBot(Plugin):
                 self.log.exception(f"[urlpreview] WARNING: {evt.sender} tried to access blacklisted IP: {str(unsafe_url)}")
                 continue
 
-            og = await fetch_all(self, url_str, EXT_ENABLED, appid, HOMESERVER)
+            og = await fetch_all(self=self, url_str=url_str, EXT_ENABLED=EXT_ENABLED, appid=appid, homeserver=HOMESERVER)
             embed = await embed_url_preview(self, url_str, og, MAX_IMAGE_EMBED)
             if embed is not None:
                 embeds.append(embed)
@@ -89,16 +89,28 @@ class UrlPreviewBot(Plugin):
 
 # Utility Commands
 
-async def fetch_all(self, url_str, EXT_ENABLED, appid: str='', homeserver: str='matrix-client.matrix.org'):
+async def fetch_all(
+        self,
+        url_str,
+        EXT_ENABLED=["synapse", "htmlparser"],
+        appid: str='BOT_ACCESS_TOKEN',
+        homeserver: str='matrix-client.matrix.org'
+    ):
     final_og = {}
     for ext in EXT_ENABLED:
         try:
             fetch_ext = EXT_ARR.get(ext, None)
-            og_resp = await fetch_ext(self, url_str, appid, homeserver)
+            arg_arr = {
+                "self": self,
+                "url_str": url_str,
+                "appid": appid,
+                "homeserver": homeserver
+            }
+            og_resp = await fetch_ext(**arg_arr)
             if og_resp:
                 final_og.update({k:v for (k,v) in og_resp.items() if v}) # Remove all 'None's
         except Exception as err:
-            self.log.exception(f"[urlpreview] [utils] Error fetch_all fetch_ext: {err}")
+            self.log.exception(f"[urlpreview] Error fetch_all fetch_ext: {err}")
     return final_og
 
 async def embed_url_preview(self, url_str, og, max_image_embed: int=300):
@@ -112,7 +124,7 @@ async def embed_url_preview(self, url_str, og, max_image_embed: int=300):
     if image_mxc is None:
         image_mxc = await process_image(self, og.get('image', None), og.get('content_type', None))
     # Check if only contains image
-    if check_all_none_except(og, ['image', 'content_type']):
+    if check_all_none_except(og, ['image', 'image_mxc', 'content_type']):
         image_solo = format_image(image_mxc, url_str, og.get('content_type', None), max_image_embed=0) # Full size image
         if image_solo is not None:
             return f"<blockquote>{image_solo}</blockquote>"

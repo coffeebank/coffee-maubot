@@ -100,14 +100,14 @@ def url_check_is_in_range(ip, ranges):
     return False
 
 def url_get_ip_from_hostname(hostname):
-    # ipv4
+    # IPv4
     try:
         return socket.gethostbyname(hostname)
     except socket.gaierror:
         pass
-    # ipv6
+    # IPv6
     try:
-        answers = socket.getaddrinfo(hostname, Name, socket.AF_INET6)
+        answers = socket.getaddrinfo(hostname, None, socket.AF_INET6)
         for answer in answers:
             if answer[1] == socket.SOCK_STREAM:
                 return answer[4][0]

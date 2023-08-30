@@ -10,30 +10,26 @@ from typing import List, Type
 import urllib.parse
 from urllib.parse import urlparse
 
-async def fetch_synapse(
-    self,
-    url_str,
-    appid: str,
-    homeserver: str="matrix-client.matrix.org",
-    *args
-):
+async def fetch_synapse(self, url_str, appid, homeserver, **kwargs):
     # No API key
     if appid in ["BOT_ACCESS_TOKEN", None]:
+        return None
+    if not homeserver:
         return None
     if not url_str:
         return None
 
-    url_params = urllib.parse.urlencode({"i": url_str, "appid": appid})
-    embed_content = f"https://{homeserver}/_matrix/media/r0/preview_url?url={url_str}"
+    url_encoded = urllib.parse.quote(str(url_str), safe="")
+    embed_content = f"https://{homeserver}/_matrix/media/r0/preview_url?url={url_encoded}"
     try:
-        resp = await self.http.get(embed_content, headers={"Authorization":"Bearer {}".format(appid)})
+        resp = await self.http.get(embed_content, headers={"Authorization": "Bearer {}".format(appid)})
     except Exception as err:
         self.log.exception(f"[urlpreview] [ext_synapse] Error: {str(err)} - {str(urlparse(url_str).netloc)}")
         return None
 
     # Guard clause
     if resp.status != 200:
-        self.log.exception(f"[urlpreview] [ext_synapse] Error: resp.status {str(resp.status)} - {str(urlparse(url_str).netloc)}")
+        self.log.exception(f"[urlpreview] [ext_synapse] Error: resp.status {str(resp.status)} - {str(urlparse(url_str).netloc)} - {str(resp)}")
         return None
 
     cont = json.loads(await resp.read())
@@ -42,7 +38,7 @@ async def fetch_synapse(
         "description": synapse_format_description(cont),
         "image": synapse_format_image(cont),
         "image_mxc": synapse_format_image(cont),
-        "content_type": None,
+        "content_type": cont.get('og:image:type', None),
     }
     self.log.debug(f"[urlpreview] [ext_synapse] fetch_synapse {str(final_og)}")
     return final_og
