@@ -10,11 +10,14 @@ from urllib.parse import urlparse
 
 from .urlpreview_utils import *
 from .urlpreview_ext_htmlparser import *
+from .urlpreview_ext_json import *
 from .urlpreview_ext_synapse import *
 
+EXT_FALLBACK = ["synapse", "htmlparser", "json"]
 EXT_ARR = {
   "htmlparser": fetch_htmlparser,
-  "synapse": fetch_synapse
+  "json": fetch_json,
+  "synapse": fetch_synapse,
 }
 
 class Config(BaseProxyConfig):
@@ -22,6 +25,7 @@ class Config(BaseProxyConfig):
         helper.copy("ext_enabled")
         helper.copy("appid")
         helper.copy("homeserver")
+        helper.copy("json_max_char")
         helper.copy("max_links")
         helper.copy("min_image_width")
         helper.copy("max_image_embed")
@@ -50,6 +54,7 @@ class UrlPreviewBot(Plugin):
         appid = self.config["appid"]
         MAX_LINKS = self.config["max_links"]
         HOMESERVER = self.config["homeserver"]
+        JSON_MAX_CHAR = self.config["json_max_char"]
         MIN_IMAGE_WIDTH = self.config["min_image_width"]
         MAX_IMAGE_EMBED = self.config["max_image_embed"]
         NO_RESULTS_REACT = self.config["no_results_react"]
@@ -61,15 +66,25 @@ class UrlPreviewBot(Plugin):
         max_count = 0
         for _, unsafe_url in matches:
             # Break when MAX_LINKS embeds, or processed MAX_LINKS*n links
-            if count >= MAX_LINKS or max_count >= MAX_LINKS*5:
+            if count >= int(MAX_LINKS) or max_count >= int(MAX_LINKS)*3:
+                self.log.debug(f"[urlpreview] Reached MAX_LINKS limit: {str(MAX_LINKS)} embeds or {str(MAX_LINKS*3)} attempts")
                 break
             # Check URL_BLACKLIST
             url_str = url_check_blacklist(unsafe_url, URL_BLACKLIST)
             if url_str is None:
                 self.log.exception(f"[urlpreview] WARNING: {evt.sender} tried to access blacklisted IP: {str(unsafe_url)}")
+                max_count += 1
                 continue
 
-            og = await fetch_all(self=self, url_str=url_str, EXT_ENABLED=EXT_ENABLED, appid=appid, homeserver=HOMESERVER)
+            arg_arr = {
+                "self": self,
+                "url_str": url_str,
+                "ext_enabled": EXT_ENABLED,
+                "appid": appid,
+                "homeserver": HOMESERVER,
+                "json_max_char": JSON_MAX_CHAR
+            }
+            og = await fetch_all(**arg_arr)
             embed = await embed_url_preview(self, url_str, og, MAX_IMAGE_EMBED)
             if embed is not None:
                 embeds.append(embed)
@@ -92,19 +107,22 @@ class UrlPreviewBot(Plugin):
 async def fetch_all(
         self,
         url_str,
-        EXT_ENABLED=["synapse", "htmlparser"],
+        ext_enabled=EXT_FALLBACK,
         appid: str='BOT_ACCESS_TOKEN',
-        homeserver: str='matrix-client.matrix.org'
+        homeserver: str='matrix-client.matrix.org',
+        json_max_char=2000,
+        **kwargs
     ):
     final_og = {}
-    for ext in EXT_ENABLED:
+    for ext in ext_enabled:
         try:
             fetch_ext = EXT_ARR.get(ext, None)
             arg_arr = {
                 "self": self,
                 "url_str": url_str,
                 "appid": appid,
-                "homeserver": homeserver
+                "homeserver": homeserver,
+                "json_max_char": json_max_char
             }
             og_resp = await fetch_ext(**arg_arr)
             if og_resp:
@@ -124,7 +142,7 @@ async def embed_url_preview(self, url_str, og, max_image_embed: int=300):
     if image_mxc is None:
         image_mxc = await process_image(self, og.get('image', None), og.get('content_type', None))
     # Check if only contains image
-    if check_all_none_except(og, ['image', 'image_mxc', 'content_type']):
+    if check_all_none_except(og, ['image', 'image_mxc', 'content_type', 'image_width']):
         image_solo = format_image(image_mxc, url_str, og.get('content_type', None), max_image_embed=0) # Full size image
         if image_solo is not None:
             return f"<blockquote>{image_solo}</blockquote>"
@@ -132,7 +150,7 @@ async def embed_url_preview(self, url_str, og, max_image_embed: int=300):
     # Default message
     title = format_title(og.get('title', None), url_str)
     description = format_description(og.get('description', None))
-    image = format_image(image_mxc, url_str, og.get('content_type', None), max_image_embed)
+    image = format_image(image_mxc, url_str, og.get('content_type', None), format_image_width(og.get('image_width', None), max_image_embed))
     message = "".join(filter(None, [title, description, image]))
     if message:
         return f"<blockquote>{message}</blockquote>"

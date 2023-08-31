@@ -25,6 +25,11 @@ async def check_image_content_type(self, image_url):
         return resp.content_type
     return None
 
+def check_line_breaks(text: str):
+    if text is None:
+        return None
+    return text.replace('\n', '<br />')
+
 def format_title(title, url_str: str=""):
     if not title:
         return None
@@ -53,6 +58,11 @@ def format_image(image_mxc, url_str: str='', content_type: str=None, max_image_e
         return f'<a href="{url_str}"><img src="{image_mxc}" alt="{content_type}" {width}/></a>'
     else:
         return f'<img src="{image_mxc}" alt="{content_type}" {width}/>'
+
+def format_image_width(image_width, max_image_embed: int=300):
+    if image_width is None:
+        return max_image_embed
+    return min(int(image_width), max_image_embed)
 
 async def process_image(self, image: str, content_type: str=None):
     if not image:
