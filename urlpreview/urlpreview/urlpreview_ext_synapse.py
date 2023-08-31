@@ -10,6 +10,8 @@ from typing import List, Type
 import urllib.parse
 from urllib.parse import urlparse
 
+from .urlpreview_utils import check_image_content_type
+
 async def fetch_synapse(self, url_str, appid, homeserver, **kwargs):
     # No API key
     if appid in ["BOT_ACCESS_TOKEN", None]:

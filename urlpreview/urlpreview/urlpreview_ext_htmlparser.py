@@ -32,8 +32,8 @@ async def fetch_htmlparser(self, url_str, **kwargs):
         }
 
     # HTML
-    parser = ExtractMetaTags()
     cont = await resp.text()
+    parser = ExtractMetaTags()
     parser.feed(cont)
 
     # Post-processing

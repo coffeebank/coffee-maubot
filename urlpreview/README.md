@@ -18,7 +18,11 @@ A bot that responds to links with a link preview embed, using Matrix API to fetc
 - `max_image_embed` - Change the maximum image width displayed in the embed. 300 is recommended.
 - `no_results_react` - Adds a reaction emoji to the message to show that no results were returned. Put `''` to disable.
 
-### Matrix Synapse URL Previews API
+### json
+
+- `json_max_char` - Set a maximum character limit for outputted JSON, to prevent long files from blocking chat. Default 2000.
+
+### synapse
 
 This is optional, but highly recommended for a better experience.
 
@@ -46,8 +50,9 @@ If the link returns a 404, the bot will return an emoji `no_results_react` (💨
 
 ## Notes
 
-- This bot comes with two parsers: `htmlparser` and `synapse`. By default, both are enabled.
+- This bot comes with three parsers: `htmlparser`, `json`, and `synapse`. By default, all are enabled.
 - You can control which ones to enable/disable or prioritize using `ext_enabled` (last in array takes priority).
+- If you're updating from older urlpreview versions, delete the whole `ext_enabled: [...]` line and click "Save" to activate new parsers
 
 ### htmlparser
 
@@ -55,12 +60,18 @@ If the link returns a 404, the bot will return an emoji `no_results_react` (💨
 - This may leak your server's IP, and is recommended for bots hosted in a VPS/server environment.
 - Some sites protected by Cloudflare/similar services may not return results.
 
+### json
+
+- `json` works out-of-the-box by directly fetching pages with `application/json` mime_type and parsing using `json` (built-in).
+- `json` may leak your server's IP, and is recommended for bots hosted in a VPS/server environment.
+- By default, JSON results are truncated to `json_max_char` (2000) characters in chat.
+
 ### synapse
 
 - `synapse` depends on the [Matrix Synapse URL Previews API](https://matrix-org.github.io/synapse/latest/setup/installation.html?highlight=url%20previews#url-previews).
 - `synapse` requires you to specify an `appid` and `homeserver` that runs Synapse and supports URL Previews.
 - Synapse URL Previews works best with the default [matrix.org homeserver](https://matrix.org/legal/terms-and-conditions/).
-  - Some homeservers return 404s at an increased rate. You can check your homeserver's acceptance [on Hoppscotch *(update BOT_ACCESS_TOKEN in Headers)*](https://hopp.sh/r/wpEdCHsQ8YHM)
+  - Some homeservers return 404s at an increased rate. You can check your homeserver's acceptance [on Hoppscotch *(update URL with your homeserver, and BOT_ACCESS_TOKEN in Headers)*](https://hopp.sh/r/wpEdCHsQ8YHM)
 
 <br />
 
