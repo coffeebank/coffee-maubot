@@ -1,4 +1,4 @@
-ext_enabled: ["synapse", "htmlparser", "json"]
+ext_enabled: ["json", "synapse", "htmlparser"]
 appid: BOT_ACCESS_TOKEN
 homeserver: matrix-client.matrix.org
 json_max_char: 2000
