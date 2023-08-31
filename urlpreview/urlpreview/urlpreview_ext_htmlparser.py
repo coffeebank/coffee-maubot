@@ -2,6 +2,7 @@ from html.parser import HTMLParser
 import json
 from typing import List, Type
 import urllib.parse
+from urllib.parse import urlparse
 
 from .urlpreview_utils import *
 

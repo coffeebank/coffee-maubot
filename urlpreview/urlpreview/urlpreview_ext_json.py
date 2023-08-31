@@ -1,5 +1,6 @@
 import json
 import urllib.parse
+from urllib.parse import urlparse
 
 from .urlpreview_utils import check_line_breaks
 
