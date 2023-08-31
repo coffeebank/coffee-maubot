@@ -61,12 +61,14 @@ class UrlPreviewBot(Plugin):
         max_count = 0
         for _, unsafe_url in matches:
             # Break when MAX_LINKS embeds, or processed MAX_LINKS*n links
-            if count >= MAX_LINKS or max_count >= MAX_LINKS*5:
+            if count >= int(MAX_LINKS) or max_count >= int(MAX_LINKS)*3:
+                self.log.debug(f"[urlpreview] Reached MAX_LINKS limit: {str(MAX_LINKS)} embeds or {str(MAX_LINKS*3)} attempts")
                 break
             # Check URL_BLACKLIST
             url_str = url_check_blacklist(unsafe_url, URL_BLACKLIST)
             if url_str is None:
                 self.log.exception(f"[urlpreview] WARNING: {evt.sender} tried to access blacklisted IP: {str(unsafe_url)}")
+                max_count += 1
                 continue
 
             og = await fetch_all(self=self, url_str=url_str, EXT_ENABLED=EXT_ENABLED, appid=appid, homeserver=HOMESERVER)
