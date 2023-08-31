@@ -78,7 +78,7 @@ class ExtractMetaTags(HTMLParser):
             if description is None:
                 description = fetch_meta_content(attrs, "description")
             if description is not None:
-                self.og["description"] = description
+                self.og["description"] = check_line_breaks(description)
 
             image = fetch_meta_content(attrs, "twitter:image")
             if image is None:

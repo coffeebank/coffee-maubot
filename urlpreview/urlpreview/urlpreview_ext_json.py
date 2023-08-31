@@ -1,6 +1,8 @@
 import json
 import urllib.parse
 
+from .urlpreview_utils import check_line_breaks
+
 async def fetch_json(self, url_str, json_max_char=2000, **kwargs):
     if not url_str:
         return None
@@ -28,11 +30,10 @@ async def fetch_json(self, url_str, json_max_char=2000, **kwargs):
     # JSON
     self.log.debug(f"[urlpreview] [ext_json] fetch_json {str(json_raw)[:600]} ...")
     json_str = json.dumps(json_raw, sort_keys=False, indent=2, separators=(',', ': '))
-    json_str = json_str.replace('\n', '<br />')
     
     return {
         "title": None,
-        "description": f"<pre><code>{str(json_str)[:json_max_char]}</code></pre>",
+        "description": f"<pre><code>{str(check_line_breaks(json_str))[:json_max_char]}</code></pre>",
         "image": None,
         "image_mxc": None,
         "content_type": None,

@@ -25,6 +25,11 @@ async def check_image_content_type(self, image_url):
         return resp.content_type
     return None
 
+def check_line_breaks(text: str):
+    if text is None:
+        return None
+    return text.replace('\n', '<br />')
+
 def format_title(title, url_str: str=""):
     if not title:
         return None

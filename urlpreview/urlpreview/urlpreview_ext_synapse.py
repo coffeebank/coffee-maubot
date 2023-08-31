@@ -10,7 +10,7 @@ from typing import List, Type
 import urllib.parse
 from urllib.parse import urlparse
 
-from .urlpreview_utils import check_image_content_type
+from .urlpreview_utils import check_image_content_type, check_line_breaks
 
 async def fetch_synapse(self, url_str, appid, homeserver, **kwargs):
     # No API key
@@ -37,7 +37,7 @@ async def fetch_synapse(self, url_str, appid, homeserver, **kwargs):
     cont = json.loads(await resp.read())
     final_og = {
         "title": synapse_format_title(cont),
-        "description": synapse_format_description(cont),
+        "description": check_line_breaks(synapse_format_description(cont)),
         "image": synapse_format_image(cont),
         "image_mxc": synapse_format_image(cont),
         "content_type": (await synapse_format_content_type(self, cont)),
