@@ -38,7 +38,8 @@ async def fetch_synapse(self, url_str, appid, homeserver, **kwargs):
         "description": synapse_format_description(cont),
         "image": synapse_format_image(cont),
         "image_mxc": synapse_format_image(cont),
-        "content_type": cont.get('og:image:type', None),
+        "content_type": (await synapse_format_content_type(self, cont)),
+        "image_width": cont.get('og:image:width', None),
     }
     self.log.debug(f"[urlpreview] [ext_synapse] fetch_synapse {str(final_og)}")
     return final_og
@@ -67,3 +68,9 @@ def synapse_format_image(cont):
     if cont.get('og:image', None):
         return cont.get('og:image', None)
     return None
+
+async def synapse_format_content_type(self, cont):
+    if cont.get('og:image:type', None):
+        return cont.get('og:image:type', None)
+    content_type = await check_image_content_type(self, synapse_format_image(cont))
+    return content_type

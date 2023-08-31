@@ -28,13 +28,20 @@ async def fetch_htmlparser(self, url_str, **kwargs):
             "image": url_str,
             "image_mxc": None,
             "content_type": resp.content_type,
+            "image_width": None,
         }
 
     # HTML
     parser = ExtractMetaTags()
     cont = await resp.text()
     parser.feed(cont)
-    parser.og["content_type"] = await check_image_content_type(self, parser.og["image"])
+
+    # Post-processing
+    if parser.og["content_type"] is None:
+        content_type = await check_image_content_type(self, parser.og["image"])
+        if content_type is not None:
+            parser.og["content_type"] = content_type
+
     self.log.debug(f"[urlpreview] [ext_htmlparser] fetch_htmlparser {str(parser.og)}")
     return parser.og
 
@@ -56,6 +63,7 @@ class ExtractMetaTags(HTMLParser):
             "image": None,
             "image_mxc": None,
             "content_type": None,
+            "image_width": None,
         }
 
     def handle_starttag(self, tag, attrs):
@@ -77,3 +85,11 @@ class ExtractMetaTags(HTMLParser):
                 image = fetch_meta_content(attrs, "og:image")
             if image is not None:
                 self.og["image"] = image
+
+            content_type = fetch_meta_content(attrs, "og:image:type")
+            if content_type is not None:
+                self.og["content_type"] = content_type
+
+            image_width = fetch_meta_content(attrs, "og:image:width")
+            if image_width is not None:
+                self.og["image_width"] = image_width

@@ -65,4 +65,9 @@ If the link returns a 404, the bot will return an emoji `no_results_react` (💨
 <br />
 
 - Due to the length of some embeds, line-breaks are stripped from any `og:description` tags.
-- Image width is hardcoded at `max_image_embed` px wide. There may be an option in the future to install a dependency that'll parse image height.
+- Image width relies on `og:image:width` provided by websites, and falls back to `max_image_embed` px wide. There may be an option in the future to install a dependency that'll parse image height.
+
+
+### Known Bugs
+
+- YouTube doesn't put line breaks in their `og:description`, which may lead to improperly parsed links in your Matrix client.

@@ -124,7 +124,7 @@ async def embed_url_preview(self, url_str, og, max_image_embed: int=300):
     if image_mxc is None:
         image_mxc = await process_image(self, og.get('image', None), og.get('content_type', None))
     # Check if only contains image
-    if check_all_none_except(og, ['image', 'image_mxc', 'content_type']):
+    if check_all_none_except(og, ['image', 'image_mxc', 'content_type', 'image_width']):
         image_solo = format_image(image_mxc, url_str, og.get('content_type', None), max_image_embed=0) # Full size image
         if image_solo is not None:
             return f"<blockquote>{image_solo}</blockquote>"
@@ -132,7 +132,7 @@ async def embed_url_preview(self, url_str, og, max_image_embed: int=300):
     # Default message
     title = format_title(og.get('title', None), url_str)
     description = format_description(og.get('description', None))
-    image = format_image(image_mxc, url_str, og.get('content_type', None), max_image_embed)
+    image = format_image(image_mxc, url_str, og.get('content_type', None), format_image_width(og.get('image_width', None), max_image_embed))
     message = "".join(filter(None, [title, description, image]))
     if message:
         return f"<blockquote>{message}</blockquote>"
