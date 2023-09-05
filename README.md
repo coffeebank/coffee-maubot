@@ -10,9 +10,7 @@ Maubot plugins by coffee ☕
 
 ## [animemanga](./animemanga)
 
-An anime manga bot for Matrix and Element.
-
-Search anime, manga (manhwa/manhua), and light novels from Anilist. See series info, status, and episodes/chapters.
+An anime manga bot for Matrix. Search anime, manga (manhwa/manhua), and light novels from Anilist. See series info, status, and episodes/chapters.
 
 ## [choose](./choose)
 
