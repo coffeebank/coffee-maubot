@@ -45,4 +45,4 @@ Search anime, manga (manhwa/manhua), and light novels from Anilist. See series i
 
 ## License
 
-- This project contains code from [coffeeani by coffee-cogs](https://coffeebank.github.io/coffee-cogs/coffeeani/) (AGPL-3.0 License) and [anisearch by Jintaku and Wyn](https://github.com/Jintaku/Jintaku-Cogs-V3/tree/master/anisearch) (AGPL-3.0 License)
+- This project contains code from [coffeeani by coffee-cogs](https://github.com/coffeebank/coffeeani-dpy) (AGPL-3.0 License) and [anisearch by Jintaku and Wyn](https://github.com/Jintaku/Jintaku-Cogs-V3/tree/master/anisearch) (AGPL-3.0 License)
