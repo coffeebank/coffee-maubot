@@ -7,6 +7,7 @@ min_image_width: 475
 max_image_embed: 300
 no_results_react: 💨
 url_blacklist:
+  - 'matrix.to'
   - '0.0.0.0'
   - '1.0.0.0/8'
   - '127.0.0.0/8'
@@ -32,4 +33,4 @@ url_blacklist:
   - 'ff00::/8'
   - 'fec0::/10'
 user_blacklist:
-  - "@user:example.com"
+  - '@user:example.com'
