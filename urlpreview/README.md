@@ -11,6 +11,20 @@ A bot that responds to links with a link preview embed, using Matrix API to fetc
 <br>
 
 
+## Usage
+
+Sending any link in chat will have the bot reply to your message with the link's embed details.
+
+The bot will first mark the chat as read, to indicate that it has initiated properly.
+
+If there are multiple links in the message, the bot will fetch up to `max_links` (3) links. If it fails, it will skip embedding that link.
+
+If the link returns a 404, the bot will return an emoji `no_results_react` (💨) on your message, to show that no results were returned.
+
+`url_blacklist` and `user_blacklist` can allow you to control how urlpreview is used.
+
+<br />
+
 ## Config
 
 - `ext_enabled` - Change which data sources to use for meta tags (last in array takes priority)
@@ -24,36 +38,21 @@ A bot that responds to links with a link preview embed, using Matrix API to fetc
 | --- | --- | --- |
 | N/A | - `json_max_char` - Set a maximum character limit for outputted JSON, to prevent long files from blocking chat. Default 2000. | - `appid` - Your bot's access token. This is needed to make the request to the Matrix Synapse URL Preview API.<br />- `homeserver` - Your homeserver (matrix-client.matrix.org by default, don't add https in front)
 
-### Upgrade Guide
-
-After every update, in your Maubot Manager's Instances, please click "Save" (even with no changes) to force-update the default Config values. This will restore missing Config values.
-
-To reset an entry to default values, delete an entry, and click "Save" to restore Config values.
-
-<br />
-
-## Usage
-
-Sending any link in chat will have the bot reply to your message with the link's embed details.
-
-The bot will first mark the chat as read, to indicate that it has initiated properly.
-
-If there are multiple links in the message, the bot will fetch up to `max_links` (3) links using aiohttp. If it fails, it will skip embedding that link.
-
-If the link returns a 404, the bot will return an emoji `no_results_react` (💨) on your message, to show that no results were returned.
-
 <br />
 
 ## Notes
 
 - This bot comes with three parsers: `htmlparser`, `json`, and `synapse`. By default, all are enabled.
 - You can control which ones to enable/disable or prioritize using `ext_enabled` (last in array takes priority).
-- If you're updating from older urlpreview versions, delete the whole `ext_enabled: [...]` line and click "Save" to activate new parsers
+- Due to the length of some embeds, line-breaks are stripped from any `og:description` tags.
+- Image width relies on `og:image:width` provided by websites, and falls back to `max_image_embed` px wide. There may be an option in the future to install a dependency that'll parse image height.
+
+<br />
 
 ### htmlparser
 
 - `htmlparser` works out-of-the-box by directly fetching the HTML page and parsing using `htmlparser` (built-in).
-- This may leak your server's IP, and is recommended for bots hosted in a VPS/server environment.
+- `htmlparser` may leak your server's IP, and is recommended for bots hosted in a VPS/server environment.
 - Some sites protected by Cloudflare/similar services may not return results.
 
 ### json
@@ -72,9 +71,11 @@ If the link returns a 404, the bot will return an emoji `no_results_react` (💨
 
 <br />
 
-- Due to the length of some embeds, line-breaks are stripped from any `og:description` tags.
-- Image width relies on `og:image:width` provided by websites, and falls back to `max_image_embed` px wide. There may be an option in the future to install a dependency that'll parse image height.
+### Upgrade Guide
 
+If you're updating from older urlpreview versions, delete the whole `ext_enabled: [...]` line and click "Save" to activate new parsers.
+
+To get new Config entries, in your Maubot Manager's Instances, please click "Save" (even with no changes) to force-update the default Config values. This will restore missing Config values and defaults. You can also delete some or all of your Config entries and click "Save" to restore defaults.
 
 ### Known Bugs
 
