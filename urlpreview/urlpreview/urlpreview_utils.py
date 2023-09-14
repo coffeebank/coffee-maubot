@@ -1,4 +1,5 @@
 import ipaddress
+import re
 import socket
 import urllib.parse
 from urllib.parse import urlparse
@@ -103,26 +104,17 @@ async def matrix_get_image(self, image_url: str, mime_type: str="image/jpeg", fi
         return None
     return mxc
 
-def url_check_is_in_range(ip, hostname_array, ranges):
+def url_check_is_in_range(ip, unsafe_url, ranges):
     for r in ranges:
         # Range item is an IP
         try:
             if ipaddress.ip_address(ip) in ipaddress.ip_network(r, strict=False):
                 return True
-        # Range item is a domain
+        # Range item is a regex
         except ValueError:
-            if r in hostname_array:
+            if re.search(r, unsafe_url) is not None:
                 return True
     return False
-
-def url_get_all_subdomains(hostname):
-    hostname_array = hostname.split(".")
-    total_hostnames = []
-    prefix = hostname_array[-1]
-    for host_part in range(len(hostname_array) - 2, -1, -1):
-        prefix = hostname_array[host_part] + "." + prefix
-        total_hostnames.append(prefix)
-    return total_hostnames
 
 def url_get_ip_from_hostname(hostname):
     # IPv4
@@ -147,7 +139,7 @@ def url_check_blacklist(url, blacklist):
     ip = url_get_ip_from_hostname(hostname)
     if not ip:
         return False
-    is_blacklisted = url_check_is_in_range(ip, url_get_all_subdomains(hostname), blacklist)
+    is_blacklisted = url_check_is_in_range(ip, url, blacklist)
     if not is_blacklisted:
         return url
     return None
