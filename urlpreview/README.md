@@ -11,6 +11,20 @@ A bot that responds to links with a link preview embed, using Matrix API to fetc
 <br>
 
 
+## Usage
+
+Sending any link in chat will have the bot reply to your message with the link's embed details.
+
+The bot will first mark the chat as read, to indicate that it has initiated properly.
+
+If there are multiple links in the message, the bot will fetch up to `max_links` (3) links. If it fails, it will skip embedding that link.
+
+If the link returns a 404, the bot will return an emoji `no_results_react` (💨) on your message, to show that no results were returned.
+
+`url_blacklist` and `user_blacklist` can allow you to control how urlpreview is used.
+
+<br />
+
 ## Config
 
 - `ext_enabled` - Change which data sources to use for meta tags (last in array takes priority)
@@ -23,18 +37,6 @@ A bot that responds to links with a link preview embed, using Matrix API to fetc
 | htmlparser | json | synapse |
 | --- | --- | --- |
 | N/A | - `json_max_char` - Set a maximum character limit for outputted JSON, to prevent long files from blocking chat. Default 2000. | - `appid` - Your bot's access token. This is needed to make the request to the Matrix Synapse URL Preview API.<br />- `homeserver` - Your homeserver (matrix-client.matrix.org by default, don't add https in front)
-
-<br />
-
-## Usage
-
-Sending any link in chat will have the bot reply to your message with the link's embed details.
-
-The bot will first mark the chat as read, to indicate that it has initiated properly.
-
-If there are multiple links in the message, the bot will fetch up to `max_links` (3) links using aiohttp. If it fails, it will skip embedding that link.
-
-If the link returns a 404, the bot will return an emoji `no_results_react` (💨) on your message, to show that no results were returned.
 
 <br />
 
