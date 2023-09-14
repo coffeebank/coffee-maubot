@@ -7,6 +7,8 @@ A bot that responds to links with a link preview embed, using Matrix API to fetc
 ## [Download >](releases)
 
 - [Join our Matrix room >](../../../#readme)
+- After every update, in your Maubot Manager's Instances, please click "Save" (even with no changes) to force-update the default Config values.
+- To reset a Config entry, delete the Config entry and value, and click "Save" to restore the default values.
 
 <br>
 
@@ -23,12 +25,6 @@ A bot that responds to links with a link preview embed, using Matrix API to fetc
 | htmlparser | json | synapse |
 | --- | --- | --- |
 | N/A | - `json_max_char` - Set a maximum character limit for outputted JSON, to prevent long files from blocking chat. Default 2000. | - `appid` - Your bot's access token. This is needed to make the request to the Matrix Synapse URL Preview API.<br />- `homeserver` - Your homeserver (matrix-client.matrix.org by default, don't add https in front)
-
-### Upgrade Guide
-
-After every update, in your Maubot Manager's Instances, please click "Save" (even with no changes) to force-update the default Config values. This will restore missing Config values.
-
-To reset an entry to default values, delete an entry, and click "Save" to restore Config values.
 
 <br />
 
