@@ -17,6 +17,8 @@ A bot that responds to links with a link preview embed, using Matrix API to fetc
 - `max_links` - Change how many links you'd like to process per message. 1-3 is recommended.
 - `max_image_embed` - Change the maximum image width displayed in the embed. 300 is recommended.
 - `no_results_react` - Adds a reaction emoji to the message to show that no results were returned. Put `''` to disable.
+- `url_blacklist` - Disable urlpreview for an IP range or a Regex entry
+- `user_blacklist` - Disable urlpreview for a user
 
 | htmlparser | json | synapse |
 | --- | --- | --- |
