@@ -7,8 +7,6 @@ A bot that responds to links with a link preview embed, using Matrix API to fetc
 ## [Download >](releases)
 
 - [Join our Matrix room >](../../../#readme)
-- After every update, in your Maubot Manager's Instances, please click "Save" (even with no changes) to force-update the default Config values.
-- To reset a Config entry, delete the Config entry and value, and click "Save" to restore the default values.
 
 <br>
 
@@ -44,12 +42,19 @@ If the link returns a 404, the bot will return an emoji `no_results_react` (💨
 
 - This bot comes with three parsers: `htmlparser`, `json`, and `synapse`. By default, all are enabled.
 - You can control which ones to enable/disable or prioritize using `ext_enabled` (last in array takes priority).
-- If you're updating from older urlpreview versions, delete the whole `ext_enabled: [...]` line and click "Save" to activate new parsers
+- Due to the length of some embeds, line-breaks are stripped from any `og:description` tags.
+- Image width relies on `og:image:width` provided by websites, and falls back to `max_image_embed` px wide. There may be an option in the future to install a dependency that'll parse image height.
+
+### Upgrade Guide
+
+If you're updating from older urlpreview versions, delete the whole `ext_enabled: [...]` line and click "Save" to activate new parsers.
+
+To get new Config entries, in your Maubot Manager's Instances, please click "Save" (even with no changes) to force-update the default Config values. This will restore missing Config values and defaults. You can also delete some or all of your Config entries and click "Save" to restore defaults.
 
 ### htmlparser
 
 - `htmlparser` works out-of-the-box by directly fetching the HTML page and parsing using `htmlparser` (built-in).
-- This may leak your server's IP, and is recommended for bots hosted in a VPS/server environment.
+- `htmlparser` may leak your server's IP, and is recommended for bots hosted in a VPS/server environment.
 - Some sites protected by Cloudflare/similar services may not return results.
 
 ### json
@@ -67,10 +72,6 @@ If the link returns a 404, the bot will return an emoji `no_results_react` (💨
 - `min_image_width` - Change the minimum image width before the bot sends an image. 475 is recommended to avoid favicons.  - Not implemented yet, to be restored soon
 
 <br />
-
-- Due to the length of some embeds, line-breaks are stripped from any `og:description` tags.
-- Image width relies on `og:image:width` provided by websites, and falls back to `max_image_embed` px wide. There may be an option in the future to install a dependency that'll parse image height.
-
 
 ### Known Bugs
 
