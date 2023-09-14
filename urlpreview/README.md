@@ -67,13 +67,13 @@ If the link returns a 404, the bot will return an emoji `no_results_react` (💨
   - Some homeservers return 404s at an increased rate. You can check your homeserver's acceptance [on Hoppscotch *(update URL with your homeserver, and BOT_ACCESS_TOKEN in Headers)*](https://hopp.sh/r/wpEdCHsQ8YHM)
 - `min_image_width` - Change the minimum image width before the bot sends an image. 475 is recommended to avoid favicons.  - Not implemented yet, to be restored soon
 
+<br />
+
 ### Upgrade Guide
 
 If you're updating from older urlpreview versions, delete the whole `ext_enabled: [...]` line and click "Save" to activate new parsers.
 
 To get new Config entries, in your Maubot Manager's Instances, please click "Save" (even with no changes) to force-update the default Config values. This will restore missing Config values and defaults. You can also delete some or all of your Config entries and click "Save" to restore defaults.
-
-<br />
 
 ### Known Bugs
 
