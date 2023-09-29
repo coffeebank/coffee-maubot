@@ -8,6 +8,7 @@ max_image_embed: 300
 no_results_react: 💨
 url_blacklist:
   - ':\/\/matrix\.to\/'
+  - '\.pdf'
   - '0.0.0.0'
   - '1.0.0.0/8'
   - '127.0.0.0/8'
