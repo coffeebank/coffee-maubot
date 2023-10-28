@@ -1,6 +1,7 @@
 ext_enabled: ["json", "synapse", "htmlparser"]
 appid: BOT_ACCESS_TOKEN
 homeserver: matrix-client.matrix.org
+html_custom_headers: {}
 json_max_char: 2000
 max_links: 3
 min_image_width: 475

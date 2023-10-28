@@ -6,12 +6,12 @@ from urllib.parse import urlparse
 
 from .urlpreview_utils import *
 
-async def fetch_htmlparser(self, url_str, **kwargs):
+async def fetch_htmlparser(self, url_str, html_custom_headers, **kwargs):
     if not url_str:
         return None
 
     try:
-        resp = await self.http.get(url_str, timeout=30) # 30s timeout matches Matrix Synapse
+        resp = await self.http.get(url_str, timeout=30, headers=html_custom_headers) # 30s timeout matches Matrix Synapse
     except Exception as err:
         self.log.exception(f"[urlpreview] [ext_htmlparser] Error: {str(err)} - {str(urlparse(url_str).netloc)}")
         return None
