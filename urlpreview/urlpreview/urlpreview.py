@@ -92,12 +92,11 @@ class UrlPreviewBot(Plugin):
             max_count += 1
 
         if len(embeds) <= 0:
-            if count > 0:
-                if NO_RESULTS_REACT:
-                    try:
-                        await evt.react(NO_RESULTS_REACT)
-                    except: # Silently ignore if react doesn't work
-                        pass
+            if count > 0 and NO_RESULTS_REACT:
+                try:
+                    await evt.react(NO_RESULTS_REACT)
+                except: # Silently ignore if react doesn't work
+                    pass
             return
         to_send = "".join(embeds)
         return await evt.reply(to_send, allow_html=True)
