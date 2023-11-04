@@ -12,7 +12,7 @@ from urllib.parse import urlparse
 
 from .urlpreview_utils import check_image_content_type, check_line_breaks
 
-async def fetch_synapse(self, url_str, appid, homeserver, html_custom_headers, **kwargs):
+async def fetch_synapse(self, url_str, appid, homeserver, html_custom_headers=None, **kwargs):
     # No API key
     if appid in ["BOT_ACCESS_TOKEN", None]:
         return None
