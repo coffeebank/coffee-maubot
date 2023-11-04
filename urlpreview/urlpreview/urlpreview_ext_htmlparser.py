@@ -39,7 +39,7 @@ async def fetch_htmlparser(self, url_str, html_custom_headers, **kwargs):
 
     # Post-processing
     if parser.og["content_type"] is None:
-        content_type = await check_image_content_type(self, parser.og["image"], headers=html_custom_headers)
+        content_type = await check_image_content_type(self, parser.og["image"], html_custom_headers=html_custom_headers)
         if content_type is not None:
             parser.og["content_type"] = content_type
 
