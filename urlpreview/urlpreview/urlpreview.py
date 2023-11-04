@@ -88,7 +88,7 @@ class UrlPreviewBot(Plugin):
                 "json_max_char": JSON_MAX_CHAR
             }
             og = await fetch_all(**arg_arr)
-            embed = await embed_url_preview(self, url_str, og, MAX_IMAGE_EMBED)
+            embed = await embed_url_preview(self, url_str=url_str, og=og, html_custom_headers=HTML_CUSTOM_HEADERS, max_image_embed=MAX_IMAGE_EMBED)
             if embed is not None:
                 embeds.append(embed)
                 count += 1 # Implement MAX_LINKS
@@ -136,7 +136,7 @@ async def fetch_all(
             self.log.exception(f"[urlpreview] Error fetch_all fetch_ext: {err}")
     return final_og
 
-async def embed_url_preview(self, url_str, og, max_image_embed: int=300):
+async def embed_url_preview(self, url_str, og, html_custom_headers=None, max_image_embed: int=300):
     # Check if None
     if not og:
         return None
@@ -145,7 +145,7 @@ async def embed_url_preview(self, url_str, og, max_image_embed: int=300):
     # Fetch image_mxc
     image_mxc = og.get('image_mxc', None)
     if image_mxc is None:
-        image_mxc = await process_image(self, og.get('image', None), og.get('content_type', None))
+        image_mxc = await process_image(self, image=og.get('image', None), html_custom_headers=html_custom_headers, content_type=og.get('content_type', None))
     # Check if only contains image
     if check_all_none_except(og, ['image', 'image_mxc', 'content_type', 'image_width']):
         image_solo = format_image(image_mxc, url_str, og.get('content_type', None), max_image_embed=0) # Full size image
