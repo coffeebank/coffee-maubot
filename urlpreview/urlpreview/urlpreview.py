@@ -72,7 +72,7 @@ class UrlPreviewBot(Plugin):
             # Check URL_BLACKLIST
             url_str = url_check_blacklist(unsafe_url, URL_BLACKLIST)
             if url_str is None:
-                self.log.exception(f"[urlpreview] WARNING: {evt.sender} tried to access blacklisted IP: {str(unsafe_url)}")
+                self.log.debug(f"[urlpreview] {evt.sender} tried to access restricted URL: {str(unsafe_url)}")
                 max_count += 1
                 continue
 
@@ -92,7 +92,7 @@ class UrlPreviewBot(Plugin):
             max_count += 1
 
         if len(embeds) <= 0:
-            if NO_RESULTS_REACT:
+            if count > 0 and NO_RESULTS_REACT:
                 try:
                     await evt.react(NO_RESULTS_REACT)
                 except: # Silently ignore if react doesn't work
