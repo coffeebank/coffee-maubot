@@ -25,6 +25,7 @@ class Config(BaseProxyConfig):
         helper.copy("ext_enabled")
         helper.copy("appid")
         helper.copy("homeserver")
+        helper.copy("html_custom_headers")
         helper.copy("json_max_char")
         helper.copy("max_links")
         helper.copy("min_image_width")
@@ -54,6 +55,7 @@ class UrlPreviewBot(Plugin):
         appid = self.config["appid"]
         MAX_LINKS = self.config["max_links"]
         HOMESERVER = self.config["homeserver"]
+        HTML_CUSTOM_HEADERS = self.config["html_custom_headers"]
         JSON_MAX_CHAR = self.config["json_max_char"]
         MIN_IMAGE_WIDTH = self.config["min_image_width"]
         MAX_IMAGE_EMBED = self.config["max_image_embed"]
@@ -82,10 +84,11 @@ class UrlPreviewBot(Plugin):
                 "ext_enabled": EXT_ENABLED,
                 "appid": appid,
                 "homeserver": HOMESERVER,
+                "html_custom_headers": HTML_CUSTOM_HEADERS,
                 "json_max_char": JSON_MAX_CHAR
             }
             og = await fetch_all(**arg_arr)
-            embed = await embed_url_preview(self, url_str, og, MAX_IMAGE_EMBED)
+            embed = await embed_url_preview(self, url_str=url_str, og=og, html_custom_headers=HTML_CUSTOM_HEADERS, max_image_embed=MAX_IMAGE_EMBED)
             if embed is not None:
                 embeds.append(embed)
                 count += 1 # Implement MAX_LINKS
@@ -110,6 +113,7 @@ async def fetch_all(
         ext_enabled=EXT_FALLBACK,
         appid: str='BOT_ACCESS_TOKEN',
         homeserver: str='matrix-client.matrix.org',
+        html_custom_headers={},
         json_max_char=2000,
         **kwargs
     ):
@@ -122,6 +126,7 @@ async def fetch_all(
                 "url_str": url_str,
                 "appid": appid,
                 "homeserver": homeserver,
+                "html_custom_headers": html_custom_headers,
                 "json_max_char": json_max_char
             }
             og_resp = await fetch_ext(**arg_arr)
@@ -131,7 +136,7 @@ async def fetch_all(
             self.log.exception(f"[urlpreview] Error fetch_all fetch_ext: {err}")
     return final_og
 
-async def embed_url_preview(self, url_str, og, max_image_embed: int=300):
+async def embed_url_preview(self, url_str, og, html_custom_headers=None, max_image_embed: int=300):
     # Check if None
     if not og:
         return None
@@ -140,7 +145,7 @@ async def embed_url_preview(self, url_str, og, max_image_embed: int=300):
     # Fetch image_mxc
     image_mxc = og.get('image_mxc', None)
     if image_mxc is None:
-        image_mxc = await process_image(self, og.get('image', None), og.get('content_type', None))
+        image_mxc = await process_image(self, image=og.get('image', None), html_custom_headers=html_custom_headers, content_type=og.get('content_type', None))
     # Check if only contains image
     if check_all_none_except(og, ['image', 'image_mxc', 'content_type', 'image_width']):
         image_solo = format_image(image_mxc, url_str, og.get('content_type', None), max_image_embed=0) # Full size image

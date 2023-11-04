@@ -12,11 +12,11 @@ def check_all_none_except(data, keys_to_except):
             return False
     return True
 
-async def check_image_content_type(self, image_url):
+async def check_image_content_type(self, image_url, html_custom_headers=None):
     if not image_url:
         return None
     try:
-        resp = await self.http.get(str(image_url))
+        resp = await self.http.get(str(image_url), headers=html_custom_headers)
     except Exception as err:
         self.log.exception(f"[urlpreview] [utils] check_image_content_type Error: {err} - {str(image_url)}")
         return None
@@ -65,7 +65,7 @@ def format_image_width(image_width, max_image_embed: int=300):
         return max_image_embed
     return min(int(image_width), max_image_embed)
 
-async def process_image(self, image: str, content_type: str=None):
+async def process_image(self, image: str, html_custom_headers=None, content_type: str=None):
     if not image:
         return None
     image_url = urlparse(image)
@@ -74,22 +74,23 @@ async def process_image(self, image: str, content_type: str=None):
         return image
     # URL is not mxc
     if not content_type:
-        content_type = await check_image_content_type(self, image)
+        content_type = await check_image_content_type(self, image, html_custom_headers=html_custom_headers)
     if not content_type:
         content_type = 'image/jpeg'
     image_mxc = await matrix_get_image(
         self,
-        image,
+        image_url=image,
+        html_custom_headers=html_custom_headers,
         mime_type=content_type,
         filename=content_type.replace('/', '.').replace('jpeg', 'jpg')
     )
     return image_mxc
 
-async def matrix_get_image(self, image_url: str, mime_type: str="image/jpeg", filename: str="image.jpg"):
+async def matrix_get_image(self, image_url: str, html_custom_headers=None, mime_type: str="image/jpeg", filename: str="image.jpg"):
     if not image_url:
         return None
     try:
-        resp = await self.http.get(image_url)
+        resp = await self.http.get(image_url, headers=html_custom_headers)
     except Exception as err:
         self.log.exception(f"[urlpreview] [utils] Error matrix_get_image http.get: {str(err)}")
         return None
