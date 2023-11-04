@@ -12,7 +12,7 @@ from urllib.parse import urlparse
 
 from .urlpreview_utils import check_image_content_type, check_line_breaks
 
-async def fetch_synapse(self, url_str, appid, homeserver, **kwargs):
+async def fetch_synapse(self, url_str, appid, homeserver, html_custom_headers, **kwargs):
     # No API key
     if appid in ["BOT_ACCESS_TOKEN", None]:
         return None
@@ -40,7 +40,7 @@ async def fetch_synapse(self, url_str, appid, homeserver, **kwargs):
         "description": check_line_breaks(synapse_format_description(cont)),
         "image": synapse_format_image(cont),
         "image_mxc": synapse_format_image(cont),
-        "content_type": (await synapse_format_content_type(self, cont)),
+        "content_type": (await synapse_format_content_type(self, cont, html_custom_headers)),
         "image_width": cont.get('og:image:width', None),
     }
     self.log.debug(f"[urlpreview] [ext_synapse] fetch_synapse {str(final_og)}")
@@ -71,8 +71,8 @@ def synapse_format_image(cont):
         return cont.get('og:image', None)
     return None
 
-async def synapse_format_content_type(self, cont):
+async def synapse_format_content_type(self, cont, html_custom_headers=None):
     if cont.get('og:image:type', None):
         return cont.get('og:image:type', None)
-    content_type = await check_image_content_type(self, synapse_format_image(cont))
+    content_type = await check_image_content_type(self, synapse_format_image(cont), html_custom_headers=html_custom_headers)
     return content_type
