@@ -25,6 +25,7 @@ class Config(BaseProxyConfig):
         helper.copy("ext_enabled")
         helper.copy("appid")
         helper.copy("homeserver")
+        helper.copy("html_custom_headers")
         helper.copy("json_max_char")
         helper.copy("max_links")
         helper.copy("min_image_width")
@@ -54,6 +55,7 @@ class UrlPreviewBot(Plugin):
         appid = self.config["appid"]
         MAX_LINKS = self.config["max_links"]
         HOMESERVER = self.config["homeserver"]
+        HTML_CUSTOM_HEADERS = self.config["html_custom_headers"]
         JSON_MAX_CHAR = self.config["json_max_char"]
         MIN_IMAGE_WIDTH = self.config["min_image_width"]
         MAX_IMAGE_EMBED = self.config["max_image_embed"]
@@ -82,6 +84,7 @@ class UrlPreviewBot(Plugin):
                 "ext_enabled": EXT_ENABLED,
                 "appid": appid,
                 "homeserver": HOMESERVER,
+                "html_custom_headers": HTML_CUSTOM_HEADERS,
                 "json_max_char": JSON_MAX_CHAR
             }
             og = await fetch_all(**arg_arr)
@@ -110,6 +113,7 @@ async def fetch_all(
         ext_enabled=EXT_FALLBACK,
         appid: str='BOT_ACCESS_TOKEN',
         homeserver: str='matrix-client.matrix.org',
+        html_custom_headers={},
         json_max_char=2000,
         **kwargs
     ):
@@ -122,6 +126,7 @@ async def fetch_all(
                 "url_str": url_str,
                 "appid": appid,
                 "homeserver": homeserver,
+                "html_custom_headers": html_custom_headers,
                 "json_max_char": json_max_char
             }
             og_resp = await fetch_ext(**arg_arr)
