@@ -4,13 +4,17 @@ Have the bot choose for you
 
 **`[p]choose item1 | item2 | item3`**
 
-![preview.jpg](preview.jpg)
+![preview.jpg](https://coffeebank.github.io/coffee-maubot/assets/choose-preview.jpg)
+
+<div className="hidden">
 
 ## [Download >](releases)
 
 - [Join our Matrix room >](../../../#readme)
 
-<br>
+</div>
+
+<br />
 
 
 ## Config
