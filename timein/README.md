@@ -4,13 +4,17 @@ Get the time in specific cities. Check timezones.
 
 **`[p]timein New York`**
 
-![preview.jpg](preview.jpg)
+![preview.jpg](https://coffeebank.github.io/coffee-maubot/assets/timein-preview.jpg)
 
-## [Download >](releases)
+<div className="hidden">
 
-- [Join our Matrix room >](../../../#readme)
+## [Download >](https://coffeebank.github.io/coffee-maubot/timein)
 
-<br>
+- [Join our Matrix room >](https://coffeebank.github.io/matrix)
+
+</div>
+
+<br />
 
 
 ## Requirements
@@ -21,7 +25,7 @@ Dependences are optional, but highly recommended. See Fallback Search in Notes s
 
 `pip install pytz fuzzywuzzy`
 
-### Python <=3.8
+### Python \<\=3.8
 
 **Dependencies are required. Run:**
 

@@ -6,13 +6,17 @@ Search anime, manga (manhwa/manhua), and light novels from Anilist. See series i
 
 **`[p]manga Give My Regards to Black Jack`**
 
-![preview.jpg](preview.jpg)
+![preview.jpg](https://coffeebank.github.io/coffee-maubot/assets/animemanga-preview.jpg)
 
-## [Download >](releases)
+<div className="hidden">
 
-- [Join our Matrix room >](../../../#readme)
+## [Download >](https://coffeebank.github.io/coffee-maubot/animemanga)
 
-<br>
+- [Join our Matrix room >](https://coffeebank.github.io/matrix)
+
+</div>
+
+<br />
 
 ## Features
 

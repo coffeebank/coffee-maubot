@@ -2,13 +2,17 @@
 
 A bot that responds to links with a link preview embed, using Matrix API to fetch meta tags
 
-![preview.jpg](preview.jpg)
+![preview.jpg](https://coffeebank.github.io/coffee-maubot/assets/urlpreview-preview.jpg)
 
-## [Download >](releases)
+<div className="hidden">
 
-- [Join our Matrix room >](../../../#readme)
+## [Download >](https://coffeebank.github.io/coffee-maubot/urlpreview)
 
-<br>
+- [Join our Matrix room >](https://coffeebank.github.io/matrix)
+
+</div>
+
+<br />
 
 
 ## Usage
@@ -28,15 +32,34 @@ If the link returns a 404, the bot will return an emoji `no_results_react` (💨
 ## Config
 
 - `ext_enabled` - Change which data sources to use for meta tags (last in array takes priority)
+- `html_custom_headers` - Set custom headers (ie. User-Agent, Accept-Encoding, etc.) for data fetching
 - `max_links` - Change how many links you'd like to process per message. 1-3 is recommended.
 - `max_image_embed` - Change the maximum image width displayed in the embed. 300 is recommended.
 - `no_results_react` - Adds a reaction emoji to the message to show that no results were returned. Put `''` to disable.
 - `url_blacklist` - Disable urlpreview for an IP range or a Regex entry
 - `user_blacklist` - Disable urlpreview for a user
 
-| htmlparser | json | synapse |
-| --- | --- | --- |
-| N/A | - `json_max_char` - Set a maximum character limit for outputted JSON, to prevent long files from blocking chat. Default 2000. | - `appid` - Your bot's access token. This is needed to make the request to the Matrix Synapse URL Preview API.<br />- `homeserver` - Your homeserver (matrix-client.matrix.org by default, don't add https in front)
+<details open>
+{( <summary><b>htmlparser</b></summary> )}
+
+N/A
+
+</details>
+
+<details open>
+{( <summary><b>json</b></summary> )}
+
+- `json_max_char` - Set a maximum character limit for outputted JSON, to prevent long files from blocking chat. Default 2000.
+
+</details>
+
+<details open>
+{( <summary><b>synapse</b></summary> )}
+
+- `appid` - Your bot's access token. This is needed to make the request to the Matrix Synapse URL Preview API.
+- `homeserver` - Your homeserver (matrix-client.matrix.org by default, don't add https in front
+
+</details>
 
 <br />
 
@@ -47,27 +70,34 @@ If the link returns a 404, the bot will return an emoji `no_results_react` (💨
 - Due to the length of some embeds, line-breaks are stripped from any `og:description` tags.
 - Image width relies on `og:image:width` provided by websites, and falls back to `max_image_embed` px wide. There may be an option in the future to install a dependency that'll parse image height.
 
-<br />
-
-### htmlparser
+<details>
+{( <summary><b>htmlparser</b></summary> )}
 
 - `htmlparser` works out-of-the-box by directly fetching the HTML page and parsing using `htmlparser` (built-in).
 - `htmlparser` may leak your server's IP, and is recommended for bots hosted in a VPS/server environment.
 - Some sites protected by Cloudflare/similar services may not return results.
 
-### json
+</details>
+
+<details>
+{( <summary><b>json</b></summary> )}
 
 - `json` works out-of-the-box by directly fetching pages with `application/json` mime_type and parsing using `json` (built-in).
 - `json` may leak your server's IP, and is recommended for bots hosted in a VPS/server environment.
 - By default, JSON results are truncated to `json_max_char` (2000) characters in chat.
 
-### synapse
+</details>
+
+<details>
+{( <summary><b>synapse</b></summary> )}
 
 - `synapse` depends on the [Matrix Synapse URL Previews API](https://matrix-org.github.io/synapse/latest/setup/installation.html?highlight=url%20previews#url-previews).
 - `synapse` requires you to specify an `appid` and `homeserver` that runs Synapse and supports URL Previews.
 - Synapse URL Previews works best with the default [matrix.org homeserver](https://matrix.org/legal/terms-and-conditions/).
   - Some homeservers return 404s at an increased rate. You can check your homeserver's acceptance [on Hoppscotch *(update URL with your homeserver, and BOT_ACCESS_TOKEN in Headers)*](https://hopp.sh/r/wpEdCHsQ8YHM)
 - `min_image_width` - Change the minimum image width before the bot sends an image. 475 is recommended to avoid favicons.  - Not implemented yet, to be restored soon
+
+</details>
 
 <br />
 
@@ -79,4 +109,5 @@ To get new Config entries, in your Maubot Manager's Instances, please click "Sav
 
 ### Known Bugs
 
+- As of v0.3, image previews will expire after a few days. If you would like to preserve any images, please manually copy-paste reupload the images into chat as an uploaded image.
 - YouTube doesn't put line breaks in their `og:description`, which may lead to improperly parsed links in your Matrix client.

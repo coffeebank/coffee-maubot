@@ -2,11 +2,15 @@
 
 Have the bot send a message as custom HTML. Test and preview formatted HTML body in Matrix.
 
-![preview.jpg](preview.jpg)
+![preview.jpg](https://coffeebank.github.io/coffee-maubot/assets/send-custom-html-preview.jpg)
 
-## [Download >](releases)
+<div className="hidden">
 
-- [Join our Matrix room >](../../../#readme)
+## [Download >](https://coffeebank.github.io/coffee-maubot/send-custom-html)
+
+- [Join our Matrix room >](https://coffeebank.github.io/matrix)
+
+</div>
 
 <br />
 

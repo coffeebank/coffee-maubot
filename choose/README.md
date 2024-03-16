@@ -8,9 +8,9 @@ Have the bot choose for you
 
 <div className="hidden">
 
-## [Download >](releases)
+## [Download >](https://coffeebank.github.io/coffee-maubot/choose)
 
-- [Join our Matrix room >](../../../#readme)
+- [Join our Matrix room >](https://coffeebank.github.io/matrix)
 
 </div>
 

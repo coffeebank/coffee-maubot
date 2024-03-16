@@ -4,13 +4,17 @@ A Japanese dictionary Matrix bot for searching and translating Japanese vocabula
 
 Searches Jisho using Jisho API.
 
-![preview.jpg](preview.jpg)
+![preview.jpg](https://coffeebank.github.io/coffee-maubot/assets/jadict-preview.jpg)
 
-## [Download >](releases)
+<div className="hidden">
 
-- [Join our Matrix room >](../../../#readme)
+## [Download >](https://coffeebank.github.io/coffee-maubot/jadict)
 
-<br>
+- [Join our Matrix room >](https://coffeebank.github.io/matrix)
+
+</div>
+
+<br />
 
 ## Features
 
