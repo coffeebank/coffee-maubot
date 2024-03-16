@@ -19,15 +19,7 @@ Get the time in specific cities. Check timezones.
 
 ## Requirements
 
-### Python 3.9+
-
-Dependences are optional, but highly recommended. See Fallback Search in Notes section below.
-
-`pip install pytz fuzzywuzzy`
-
-### Python \<\=3.8
-
-**Dependencies are required. Run:**
+Dependences are optional, but highly recommended.
 
 `pip install pytz fuzzywuzzy`
 
@@ -40,11 +32,31 @@ Dependences are optional, but highly recommended. See Fallback Search in Notes s
 Find valid cities and timezone strings at [https://coffeebank.github.io/timezone-picker/](https://coffeebank.github.io/timezone-picker/)
 
 
+## Usage with Dependencies
+
+- 🔺 `!timein new yo`
+  - These dependencies allow the bot to search with the city name, typos, and in lowercase
+
+
+## Usage (Default)
+
+- 🔹 `!timein America/New_York`
+  - In Default mode, you must specify the exact timezone string for the bot to work
+
+
 ## Notes
 
-- Dependencies: `pytz`, `fuzzywuzzy`
-  - 🔺 `!timein new yo`
-    - These dependencies allow the bot to search with the city name, typos, and in lowercase
-- Fallback Search (Python 3.9+ only)
-  - 🔹 `!timein America/New_York`
-    - In Fallback Search mode, you must specify the exact timezone string for the bot to work
+- `timein` works best with Python 3.9+
+
+<details>
+{( <summary><h3>For Python &lt;=3.8 Users</h3></summary> )}
+
+> ⚠️ Please note that [Maubot recommends Python 3.10+](https://docs.mau.fi/maubot/usage/setup/index.html).
+
+**`timein` requires dependencies to function on Python &lt;=3.8.**
+
+**Run:**
+
+`pip install pytz fuzzywuzzy`
+
+</details>
