@@ -1,6 +1,6 @@
 maubot: 0.1.0
 id: coffee.maubot.sendcustomhtml
-version: 0.1.0.6
+version: 0.2.0.256
 license: AGPL-3.0-or-later
 modules:
 - sendcustomhtml
