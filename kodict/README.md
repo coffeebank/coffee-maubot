@@ -54,6 +54,7 @@ Uses material from National Institute of Korean Language's [Korean-English Learn
 
 ## Notes
 
+- **This plugin require Python 3.9+** ([Maubot recommends Python 3.10+](https://docs.mau.fi/maubot/usage/setup/index.html))
 - A [Korean-English Learners' Dictionary (한국어기초사전) API](https://krdict.korean.go.kr/openApi/openApiInfo) (free) is required.
   - `krdict.py`'s non-api URLs needs fixing. No ETA. The API methods still work.
 - A custom `krdict.py` dependency is required.
