@@ -22,7 +22,7 @@ Search anime, manga (manhwa/manhua), and light novels from Anilist. See series i
 
 - Synopsis/summary with official sources, streaming sites, and links
 - English language titles with Native language and Romaji/Romanization support
-- Series status (Not yet released, Releasing, Finished)
+- Series status (Finished, Releasing, Not yet released)
 - Series preview embed images
 - Media sub-types (Oneshot, Novel, ONA, etc.)
 
@@ -30,21 +30,24 @@ Search anime, manga (manhwa/manhua), and light novels from Anilist. See series i
 ## Commands
 
 - `anime`
-  - Searches for anime using Anilist
-- `manga`, aliases=`["manhwa", "manhua", "lightnovel", "漫画", "漫画", "만화"]`
-  - Searches for manga/manhwa/manhua and light novels using Anilist
+  - Search for anime, animations, and donghua
+  - Searches Anilist
+- `manga`, aliases=`["manhwa", "manhua", "lightnovel"]`
+  - Search for manga, manhwa, manhua, and light novels.
+  - Searches Anilist, MangaDex, and Batoto.
 
 
 ## Config
 
 - `results` - The number of results the bot should return
-- `max_description_length` - The length of the description body
+- `max_description_length` - The length of the description body (not currently used)
+- `deepl_api` - [DeepL Translate Free API key](https://www.deepl.com/pro-api) (not currently used)
 
 
 ## Notes
 
 - All manga/manhwa/manhua and light novel searches are categorized under "manga" by Anilist. Searches may return unexpected results.
-  - A paginate feature has not yet been added. For now, you can adjust the number of `results` returned in the config.
+- `results` - 2 recommended, set 0 to show all results. Higher counts take longer as the bot has to upload/fetch Matrix mxc for each image. A paginate feature has been added in v0.2.0.
 - This bot is tested on Element and Cinny.
 
 ## License
