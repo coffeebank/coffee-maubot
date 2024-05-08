@@ -1,0 +1,1 @@
+from .kodict import KodictBot

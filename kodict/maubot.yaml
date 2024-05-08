@@ -1,0 +1,16 @@
+maubot: 0.1.0
+id: coffee.maubot.kodict
+version: 0.1.0.366
+license: AGPL-3.0-or-later
+modules:
+- kodict
+main_class: KodictBot
+database: false
+extra_files:
+ - base-config.yaml
+dependencies:
+ - cssselect
+ - kodict-core
+ - korean-romanizer
+ - krdict.py@git+https://github.com/coffeebank/krdict.py
+ - lxml

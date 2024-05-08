@@ -1,0 +1,5 @@
+cssselect
+kodict-core
+korean-romanizer
+krdict.py @ git+https://github.com/coffeebank/krdict.py
+lxml
