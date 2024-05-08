@@ -19,6 +19,10 @@ Have the bot send a message as custom HTML. Test and preview formatted HTML body
 
 - `sendcustomhtml`
   - Have the bot send a message as custom HTML.
+- `sendcustomembed`
+  - Have the bot send a [Discord-format embed](https://discordpy.readthedocs.io/en/stable/api.html#embed)
+- `sendcustommenucollapsible`
+  - Have the bot send a collapsible menu (format: `List[str]`)
 
 ## Config
 
