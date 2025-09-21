@@ -2,7 +2,9 @@
 
 An anime manga bot for Matrix.
 
-Search anime, manga (manhwa/manhua), and light novels from Anilist. See series info, status, and episodes/chapters.
+Search anime, manga (manhwa/manhua), and light novels. See series info, status, and episodes/chapters.
+
+Supports Anilist, MangaDex, Bangumi, and Batoto.
 
 **`[p]manga Give My Regards to Black Jack`**
 
@@ -29,12 +31,25 @@ Search anime, manga (manhwa/manhua), and light novels from Anilist. See series i
 
 ## Commands
 
-- `anime`
+- `!anime <title: str>`
   - Search for anime, animations, and donghua
-  - Searches Anilist
-- `manga`, aliases=`["manhwa", "manhua", "lightnovel"]`
-  - Search for manga, manhwa, manhua, and light novels.
-  - Searches Anilist, MangaDex, and Batoto.
+- `!manga <title: str>`
+  - aliases=`["manhwa", "manhua", "lightnovel"]`
+  - Search for manga, manhwa, manhua, and light novels. Searches Anilist, MangaDex, and Batoto.
+- `!anilist <type: str> <title: str>`
+  - `type:`
+    - `anime`, aliases=`["donghua", "动画", "動畫", "アニメ", "あにめ"]`
+    - `manga`, aliases=`["manhua", "漫画", "漫畫", "manhwa", "만화", "lightnovel", "小说", "小說", "小説"]`
+  - Search Anilist. Type is "anime" or "manga". Light novel searches are categorized as "manga".
+- `!mangadex <title: str>`
+  - Search MangaDex
+- `!bangumi <type: str> <title: str>`
+  - `type:`
+    - `anime`, aliases=`["donghua", "动画", "動畫", "アニメ", "あにめ"]`
+    - `manga`, aliases=`["manhua", "漫画", "漫畫", "manhwa", "만화", "lightnovel", "小说", "小說", "小説"]`
+  - Search Bangumi. Type is "anime" or "manga". Light novel searches are categorized as "manga". Note: Results may be in non-English languages.
+- `!batoto <title: str>`
+  - Search Batoto
 
 
 ## Config
@@ -46,9 +61,9 @@ Search anime, manga (manhwa/manhua), and light novels from Anilist. See series i
 
 ## Notes
 
-- All manga/manhwa/manhua and light novel searches are categorized under "manga" by Anilist. Searches may return unexpected results.
+- All manga/manhwa/manhua and light novel searches are categorized under "manga" by Anilist and Bangumi. Searches may return unexpected results.
 - `results` - 2 recommended, set 0 to show all results. Higher counts take longer as the bot has to upload/fetch Matrix mxc for each image. A paginate feature has been added in v0.2.0.
-- This bot is tested on Element and Cinny.
+- This bot is tested on [Cinny](https://cinny.in).
 
 ## License
 
