@@ -2,7 +2,9 @@
 
 An anime manga bot for Matrix.
 
-Search anime, manga (manhwa/manhua), and light novels from Anilist. See series info, status, and episodes/chapters.
+Search anime, manga (manhwa/manhua), and light novels. See series info, status, and episodes/chapters.
+
+Supports Anilist, MangaDex, Bangumi, and Batoto.
 
 **`[p]manga Give My Regards to Black Jack`**
 
@@ -35,6 +37,10 @@ Search anime, manga (manhwa/manhua), and light novels from Anilist. See series i
 - `manga`, aliases=`["manhwa", "manhua", "lightnovel"]`
   - Search for manga, manhwa, manhua, and light novels.
   - Searches Anilist, MangaDex, and Batoto.
+- `bangumi`, aliases=`["番组", "番組", "番组计划", "番組計劃"]`
+  - `anime` - Search for anime/donghua
+  - `manga` - Search for manhua/manga/manhwa
+  - Searches Bangumi
 
 
 ## Config
@@ -46,7 +52,7 @@ Search anime, manga (manhwa/manhua), and light novels from Anilist. See series i
 
 ## Notes
 
-- All manga/manhwa/manhua and light novel searches are categorized under "manga" by Anilist. Searches may return unexpected results.
+- All manga/manhwa/manhua and light novel searches are categorized under "manga" by Anilist and Bangumi. Searches may return unexpected results.
 - `results` - 2 recommended, set 0 to show all results. Higher counts take longer as the bot has to upload/fetch Matrix mxc for each image. A paginate feature has been added in v0.2.0.
 - This bot is tested on Element and Cinny.
 
