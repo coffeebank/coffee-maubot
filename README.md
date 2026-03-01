@@ -12,7 +12,7 @@ Maubot plugins by coffee ☕
 
 ## [animemanga](https://coffeebank.github.io/coffee-maubot/animemanga)
 
-An anime/manga bot for Matrix. Search anime, manga (manhwa/manhua), and light novels. See series info, status, episodes/chapters, and tags. Search Anilist, MangaDex, and Batoto.
+An anime/manga bot for Matrix. Search anime, manga (manhwa/manhua), and light novels. See series info, status, episodes/chapters, and tags. Search Anilist, MangaDex, and Bangumi.
 
 ## [choose](https://coffeebank.github.io/coffee-maubot/choose)
 
