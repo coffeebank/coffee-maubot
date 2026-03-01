@@ -19,6 +19,8 @@ Get the time in specific cities. Check timezones.
 
 ## Requirements
 
+Python 3.9+
+
 Dependences are optional, but highly recommended.
 
 `pip install pytz fuzzywuzzy`
@@ -32,24 +34,24 @@ Dependences are optional, but highly recommended.
 Find valid cities and timezone strings at [https://coffeebank.github.io/timezone-picker/](https://coffeebank.github.io/timezone-picker/)
 
 
-## Usage with Dependencies
-
-- 🔺 `!timein new yo`
-  - These dependencies allow the bot to search with the city name, typos, and in lowercase
-
-
 ## Usage (Default)
 
-- 🔹 `!timein America/New_York`
+- `!timein America/New_York`
   - In Default mode, you must specify the exact timezone string for the bot to work
+
+
+## Usage with Dependencies
+
+- `!timein new yo`
+  - These dependencies allow the bot to search with the city name, typos, and in lowercase
 
 
 ## Notes
 
-- `timein` works best with Python 3.9+
+- `timein` recommends Python 3.9+
 
 <details>
-{( <summary><h3>For Python &lt;=3.8 Users</h3></summary> )}
+{( <summary>For Python &lt;=3.8 Users</summary> )}
 
 > ⚠️ Please note that [Maubot recommends Python 3.10+](https://docs.mau.fi/maubot/usage/setup/index.html).
 

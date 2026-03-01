@@ -54,7 +54,7 @@ Uses material from National Institute of Korean Language's [Korean-English Learn
 
 ## Notes
 
-- **This plugin require Python 3.9+** ([Maubot recommends Python 3.10+](https://docs.mau.fi/maubot/usage/setup/index.html))
+- **This plugin requires Python 3.9+** ([Maubot recommends Python 3.10+](https://docs.mau.fi/maubot/usage/setup/index.html))
 - A custom `krdict.py` dependency is required.
   - The custom version replaces `requests` with `aiohttp, asyncio` for async support
 
