@@ -4,7 +4,7 @@ An anime manga bot for Matrix.
 
 Search anime, manga (manhwa/manhua), and light novels. See series info, status, and episodes/chapters.
 
-Supports Anilist, MangaDex, Bangumi, and Batoto.
+Supports Anilist, MangaDex, and Bangumi.
 
 **`[p]manga Give My Regards to Black Jack`**
 
@@ -35,7 +35,7 @@ Supports Anilist, MangaDex, Bangumi, and Batoto.
   - Search for anime, animations, and donghua
 - `!manga <title: str>`
   - aliases=`["manhwa", "manhua", "lightnovel"]`
-  - Search for manga, manhwa, manhua, and light novels. Searches Anilist, MangaDex, and Batoto.
+  - Search for manga, manhwa, manhua, and light novels. Searches Anilist, MangaDex.
 - `!anilist <type: str> <title: str>`
   - `type:`
     - `anime`, aliases=`["donghua", "动画", "動畫", "アニメ", "あにめ"]`
@@ -48,8 +48,6 @@ Supports Anilist, MangaDex, Bangumi, and Batoto.
     - `anime`, aliases=`["donghua", "动画", "動畫", "アニメ", "あにめ"]`
     - `manga`, aliases=`["manhua", "漫画", "漫畫", "manhwa", "만화", "lightnovel", "小说", "小說", "小説"]`
   - Search Bangumi. Type is "anime" or "manga". Light novel searches are categorized as "manga". Note: Results may be in non-English languages.
-- `!batoto <title: str>`
-  - Search Batoto
 
 
 ## Config
@@ -64,6 +62,9 @@ Supports Anilist, MangaDex, Bangumi, and Batoto.
 - All manga/manhwa/manhua and light novel searches are categorized under "manga" by Anilist and Bangumi. Searches may return unexpected results.
 - `results` - 2 recommended, set 0 to show all results. Higher counts take longer as the bot has to upload/fetch Matrix mxc for each image. A paginate feature has been added in v0.2.0.
 - This bot is tested on [Cinny](https://cinny.in).
+- (2026-02-28) Batoto Source
+  - (2026-02-28) (≥ v0.2.2.55) As of 2026-01-21, Batoto is permanently closed. All commands for this source has been disabled. All references to the source will be removed in a future update. Learn more: https://www.reddit.com/r/Batoto/comments/1qjgc52/
+
 
 ## License
 

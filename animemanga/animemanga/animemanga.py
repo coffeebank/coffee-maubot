@@ -92,16 +92,7 @@ class AnimeMangaBot(Plugin):
             if number_of_results > 0:
                 sendables = sendables[:number_of_results]
             return await evt.respond(SendableMenuCollapsible.to_sendable(sendables), allow_html=True)
-        # batoto
-        embeds = await maubot_batoto_embeds(title)
-        if embeds:
-            if number_of_results > 0:
-                embeds = embeds[:number_of_results]
-            embeds_after_mxc = [await maubot_parse_embed_images(self, em.get('embed', None)) for em in embeds]
-            sendables = [SendableEmbed.to_sendable(eam) for eam in embeds_after_mxc]
-            if number_of_results > 0:
-                sendables = sendables[:number_of_results]
-            return await evt.respond(SendableMenuCollapsible.to_sendable(sendables), allow_html=True)
+
         # no results
         no_results = SendableEmbed.to_sendable(maubot_embed_source(None))
         return await evt.respond(no_results, allow_html=True)
@@ -175,21 +166,4 @@ class AnimeMangaBot(Plugin):
     @command.new("batoto", help="Search Batoto")
     @command.argument("title", pass_raw=True)
     async def animemanga_batoto(self, evt: MessageEvent, title: str) -> None:
-        if not title:
-            return await evt.reply("**Usage:** See [documentation](https://coffeebank.github.io/coffee-maubot/animemanga)")
-        await evt.mark_read()
-        number_of_results = self.config.get("results", 0)
-        await self.client.set_typing(evt.room_id, timeout=0)
-        # batoto
-        embeds = await maubot_batoto_embeds(title)
-        if embeds:
-            if number_of_results > 0:
-                embeds = embeds[:number_of_results]
-            embeds_after_mxc = [await maubot_parse_embed_images(self, em.get('embed', None)) for em in embeds]
-            sendables = [SendableEmbed.to_sendable(eam) for eam in embeds_after_mxc]
-            if number_of_results > 0:
-                sendables = sendables[:number_of_results]
-            return await evt.respond(SendableMenuCollapsible.to_sendable(sendables), allow_html=True)
-        # no results
-        no_results = SendableEmbed.to_sendable(maubot_embed_source(None))
-        return await evt.respond(no_results, allow_html=True)
+        return await evt.respond("Batoto is permanently closed. This command will be removed in a future update. Learn more: https://coffeebank.github.io/coffee-maubot/animemanga/#notes")
