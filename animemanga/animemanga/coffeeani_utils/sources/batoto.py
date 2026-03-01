@@ -13,7 +13,8 @@ NAME_BATOTO = "Batoto"
 
 COLOR_BATOTO = "#13667A"
 
-URL_BATOTO = "https://bato.to/apo/"
+URL_BATOTO_DOMAIN = "https://bato.ing"
+URL_BATOTO = URL_BATOTO_DOMAIN+"/apo/"
 
 SEARCH_BATOTO_QUERY = """
 query get_content_searchComic($select: SearchComic_Select) {
@@ -56,12 +57,20 @@ query get_content_searchComic($select: SearchComic_Select) {
 """
 
 async def batoto_request(query, variables=None):
+    # (2026-01-21) Batoto is permanently closed
+    return None
+
     if variables is None:
         variables = {}
     request_json = {"query": query, "variables": variables}
     headers = {"content-type": "application/json"}
+    # Early timeout in case server is down
+    timeout = aiohttp.ClientTimeout(total=30)
     async with aiohttp.ClientSession() as session:
-        async with session.post(URL_BATOTO, data=json.dumps(request_json), headers=headers) as response:
+        async with session.post(URL_BATOTO, data=json.dumps(request_json), headers=headers, timeout=timeout) as response:
+            if response.status != 200:
+                logger.error(f"Failed to fetch {URL_BATOTO}. Status code: {response.status}")
+                return None
             return await response.json()
 
 async def batoto_search_manga(query: str):
@@ -85,7 +94,7 @@ async def batoto_search_manga(query: str):
         anime_manga = anime_manga_obj.get("data", {})
         payload = SearchResult()
         payload.series_id = anime_manga.get("id", 0)
-        payload.link = "https://bato.to"+anime_manga.get("urlPath", "/search?word="+urllib.parse.quote(query, safe=""))
+        payload.link = URL_BATOTO_DOMAIN+anime_manga.get("urlPath", "/search?word="+urllib.parse.quote(query, safe=""))
         payload.title = anime_manga.get("name", None) or anime_manga.get("slug", "").replace("-", "") or "No Title"
         payload.description = batoto_get_description(anime_manga)
         payload.image = None
