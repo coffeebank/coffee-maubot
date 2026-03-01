@@ -2,6 +2,10 @@ import ipaddress
 import re
 import socket
 import urllib.parse
+import os
+import subprocess
+from datetime import datetime as dt
+import hashlib
 from urllib.parse import urlparse
 
 IMAGE_TYPES = ["image/gif", "image/jpg", "image/jpeg", "image/png", "image/webp"]
@@ -31,23 +35,26 @@ def check_line_breaks(text: str):
         return None
     return text.replace('\n', '<br />')
 
-def format_title(title, url_str: str=""):
+def format_title(title, url_str: str="", custom_styles: str="",use_divtag_instead_of_htag: bool=False):
     if not title:
         return None
+    tag = 'div' if use_divtag_instead_of_htag else 'h3'
     if url_str:
-        return f'<h3><a href="{url_str}">{str(title)}</a></h3>'
+        return f'<{tag} style="{custom_styles}"><a href="{url_str}">{str(title)}</a></{tag}>'
     else:
-        return f'<h3>{str(title)}</h3>'
+        return f'<{tag} style="{custom_styles}" >{str(title)}</{tag}>'
 
-def format_description(description, preserve_line_breaks: bool=False):
+def format_description(description, preserve_line_breaks: bool=False, custom_styles: str="", indent_description: bool=False, use_divtag_instead_of_ptag: bool=False):
     if not description:
         return None
+    prefix = '&#8250;&nbsp;&nbsp;&nbsp;&nbsp;' if indent_description else ''
+    tag = 'div' if use_divtag_instead_of_ptag else 'p'
     if preserve_line_breaks is False:
-        return f'<p>'+str(description).replace('\r', ' ').replace('\n', ' ')+'</p>'
+        return f'<{tag} style="{custom_styles}">{prefix}'+str(description).replace('\r', ' ').replace('\n', ' ')+f'</{tag}>'
     else:
-        return f'<p>'+str(description)+'</p>'
+        return f'<{tag} style="{custom_styles}">{prefix}'+str(description)+f'</{tag}>'
 
-def format_image(image_mxc, url_str: str='', content_type: str=None, max_image_embed: int=300):
+def format_image(image_mxc, url_str: str='', content_type: str=None, max_image_embed: int=300, custom_styles: str=""):
     if not image_mxc:
         return None
     if not content_type:
@@ -56,9 +63,19 @@ def format_image(image_mxc, url_str: str='', content_type: str=None, max_image_e
     if max_image_embed > 0:
         width = f'width="{str(max_image_embed)}" '
     if url_str:
-        return f'<a href="{url_str}"><img src="{image_mxc}" alt="{content_type}" {width}/></a>'
+        return f'<a href="{url_str}"><img style="{custom_styles}" src="{image_mxc}" alt="{content_type}" {width}/></a>'
     else:
-        return f'<img src="{image_mxc}" alt="{content_type}" {width}/>'
+        return f'<img style="{custom_styles}" src="{image_mxc}" alt="{content_type}" {width}/>'
+def format_video(video_mxc, url_str: str='', content_type: str=None):
+    if not video_mxc:
+        return None
+    if not content_type:
+        content_type = "Video"
+
+    if url_str:
+        return f'<a href="{url_str}"><video width="320" height="240" controls><source src="{video_mxc}" type="video/mp4"></video></a>'
+    else:
+        return f'<video width="320" height="240" controls><source src="{video_mxc}" type="video/mp4"></video>'
 
 def format_image_width(image_width, max_image_embed: int=300):
     if image_width is None:
@@ -104,6 +121,47 @@ async def matrix_get_image(self, image_url: str, html_custom_headers=None, mime_
         self.log.exception(f"[urlpreview] [utils] Error matrix_get_image client.upload_media: {str(err)}")
         return None
     return mxc
+async def process_video(self, video: str, html_custom_headers=None, content_type: str=None):
+    if not video:
+        return None
+    video_url = urlparse(video)
+    # URL is mxc
+    if video_url.scheme == 'mxc':
+        return video
+    # URL is not mxc
+    # yt-dlp puts out either mp4 or webm
+    if not content_type:
+        content_type = 'video/webm'
+    image_mxc = await matrix_get_youtube_video(
+        self,
+        video_url=video,
+        html_custom_headers=html_custom_headers,
+        mime_type=content_type,
+        filename=content_type.replace('/', '.').replace('jpeg', 'jpg')
+    )
+    return image_mxc
+async def matrix_get_youtube_video(self, video_url: str, html_custom_headers=None, mime_type: str="video/webm", filename: str=""):
+    if not filename:
+        h = hashlib.md5(bytes(dt.now()))
+        filename = str(dt.now() + h.hexdigest())
+    if not video_url:
+        return None
+    try:
+        result = subprocess.run(f'yt-dlp -p {self.YT_DLP_STORAGE_PATH} --no-part {video_url} -o "{filename}"')
+    except Exception as err:
+        self.log.exception(f"[urlpreview] [utils] Error matrix_get_youtube_video http.get: {str(err)}")
+        return None
+
+    og_video = None
+    with open(filename, 'rb') as h:
+        og_video = h.read()
+    try:
+        mxc = await self.client.upload_media(og_video, mime_type=mime_type, filename=filename)
+    except Exception as err:
+        self.log.exception(f"[urlpreview] [utils] Error matrix_get_youtube_video client.upload_media: {str(err)}")
+        return None
+    return mxc
+
 
 def url_check_is_in_range(ip, unsafe_url, ranges):
     for r in ranges:

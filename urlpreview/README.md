@@ -38,6 +38,13 @@ If the link returns a 404, the bot will return an emoji `no_results_react` (💨
 - `no_results_react` - Adds a reaction emoji to the message to show that no results were returned. Put `''` to disable.
 - `url_blacklist` - Disable urlpreview for an IP range or a Regex entry
 - `user_blacklist` - Disable urlpreview for a user
+- `html_custom_title_style` - Set to a CSS string in order to apply that style as an html attribute to the title tag in a response/reply. Put `''` to disable.
+- `html_custom_description_style` -  Set to a CSS string in order to apply that style as an html attribute to the description tag in a response/reply. Put `''` to disable.
+- `html_custom_image_style` -  '' Set to a CSS string in order to apply that style as an html attribute to the image tag in a response/reply. Put `''` to disable.
+- `respond_instead_of_reply` - Set to True in order to respond rather than reply. A reply quotes the original message that prompted this bot, while a response simply sends the message without quoting.
+- `use_divtag_instead_of_htag_for_title` -  Set to True to use an HTML div tag instead of the default h3 tag in the title.
+- `use_divtag_instead_of_ptag_for_description` -  Set to True to use an HTML div tag instead of the default p tag .
+- `indent_description` -  Set to True to apply a 4-space indent and a right-arrow to the beginning of the description to improve readability when other customizations are used.
 
 <details open>
 {( <summary><b>htmlparser</b></summary> )}
