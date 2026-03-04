@@ -52,7 +52,8 @@ Supports Anilist, MangaDex, and Bangumi.
 
 ## Config
 
-- `results` - The number of results the bot should return
+- `results` - The number of results the bot should return. Default 2 (with images). Set 0 to show all results (recommended, if images disabled below).
+- `images` - Send images (media covers/thumbnails). Default true. Beware: each image adds delays due to fetching/uploading to Matrix.
 - `max_description_length` - The length of the description body (not currently used)
 - `deepl_api` - [DeepL Translate Free API key](https://www.deepl.com/pro-api) (not currently used)
 
@@ -60,7 +61,7 @@ Supports Anilist, MangaDex, and Bangumi.
 ## Notes
 
 - All manga/manhwa/manhua and light novel searches are categorized under "manga" by Anilist and Bangumi. Searches may return unexpected results.
-- `results` - 2 recommended, set 0 to show all results. Higher counts take longer as the bot has to upload/fetch Matrix mxc for each image. A paginate feature has been added in v0.2.0.
+- `results` - 2 recommended, set 0 to show all results. Higher counts take longer as the bot has to upload/fetch Matrix mxc for each image. A paginate feature has been added in v0.2.0. An images toggle has been added in v0.2.3.
 - This bot is tested on [Cinny](https://cinny.in).
 - (2026-02-28) Batoto Source
   - (2026-02-28) (≥ v0.2.2.55) As of 2026-01-21, Batoto is permanently closed. All commands for this source has been disabled. All references to the source will be removed in a future update. Learn more: https://www.reddit.com/r/Batoto/comments/1qjgc52/

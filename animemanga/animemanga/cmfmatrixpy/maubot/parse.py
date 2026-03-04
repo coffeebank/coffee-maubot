@@ -1,7 +1,9 @@
 from ..embeds import Embed
 from .fetch import maubot_fetch_image
 
-async def maubot_parse_embed_images(self, embed: Embed):
+async def maubot_parse_embed_images(self, embed: Embed, process_images: True):
+    if not process_images:
+        return embed
     image = embed.image
     if image.url:
         mxc_image = await maubot_fetch_image(self, image.url)
