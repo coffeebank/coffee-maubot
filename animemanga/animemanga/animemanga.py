@@ -65,7 +65,7 @@ class AnimeMangaBot(Plugin):
         no_results = SendableEmbed.to_sendable(maubot_embed_source(None))
         return await evt.respond(no_results, allow_html=True)
 
-    @command.new("manga", aliases=["manhwa", "manhua", "lightnovel"], help="Search for manga, manhwa, manhua, and light novels. Searches Anilist, MangaDex, and Batoto.")
+    @command.new("manga", aliases=["manhwa", "manhua", "lightnovel"], help="Search for manga, manhwa, manhua, and light novels. Searches Anilist, MangaDex.")
     @command.argument("title", pass_raw=True)
     async def animemanga_manga(self, evt: MessageEvent, title: str) -> None:
         if not title:
@@ -163,8 +163,3 @@ class AnimeMangaBot(Plugin):
             return await evt.respond(SendableMenuCollapsible.to_sendable(sendables), allow_html=True)
         no_results = SendableEmbed.to_sendable(maubot_embed_source(None))
         return await evt.respond(no_results, allow_html=True)
-
-    @command.new("batoto", help="Search Batoto")
-    @command.argument("title", pass_raw=True)
-    async def animemanga_batoto(self, evt: MessageEvent, title: str) -> None:
-        return await evt.respond("Batoto is permanently closed. This command will be removed in a future update. Learn more: https://coffeebank.github.io/coffee-maubot/animemanga/#notes")

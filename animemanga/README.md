@@ -65,6 +65,7 @@ Supports Anilist, MangaDex, and Bangumi.
 - This bot is tested on [Cinny](https://cinny.in).
 - (2026-02-28) Batoto Source
   - (2026-02-28) (≥ v0.2.2.55) As of 2026-01-21, Batoto is permanently closed. All commands for this source has been disabled. All references to the source will be removed in a future update. Learn more: https://www.reddit.com/r/Batoto/comments/1qjgc52/
+  - (2026-06-13) (≥ v0.2.3) All commands for this source has been removed.
 
 
 ## License
