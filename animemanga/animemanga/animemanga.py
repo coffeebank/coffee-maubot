@@ -13,6 +13,7 @@ logger = logging.getLogger(__name__)
 class Config(BaseProxyConfig):
     def do_update(self, helper: ConfigUpdateHelper) -> None:
         helper.copy("results")
+        helper.copy("images")
         helper.copy("max_description_length")
         helper.copy("deepl_api")
 
@@ -56,7 +57,7 @@ class AnimeMangaBot(Plugin):
         if embeds:
             if number_of_results > 0:
                 embeds = embeds[:number_of_results]
-            embeds_after_mxc = [await maubot_parse_embed_images(self, em.get('embed', None)) for em in embeds]
+            embeds_after_mxc = [await maubot_parse_embed_images(self, em.get('embed', None), self.config.get("images", True)) for em in embeds]
             sendables = [SendableEmbed.to_sendable(eam) for eam in embeds_after_mxc]
             if number_of_results > 0:
                 sendables = sendables[:number_of_results]
@@ -64,7 +65,7 @@ class AnimeMangaBot(Plugin):
         no_results = SendableEmbed.to_sendable(maubot_embed_source(None))
         return await evt.respond(no_results, allow_html=True)
 
-    @command.new("manga", aliases=["manhwa", "manhua", "lightnovel"], help="Search for manga, manhwa, manhua, and light novels. Searches Anilist, MangaDex, and Batoto.")
+    @command.new("manga", aliases=["manhwa", "manhua", "lightnovel"], help="Search for manga, manhwa, manhua, and light novels. Searches Anilist, MangaDex.")
     @command.argument("title", pass_raw=True)
     async def animemanga_manga(self, evt: MessageEvent, title: str) -> None:
         if not title:
@@ -77,7 +78,7 @@ class AnimeMangaBot(Plugin):
         if embeds:
             if number_of_results > 0:
                 embeds = embeds[:number_of_results]
-            embeds_after_mxc = [await maubot_parse_embed_images(self, em.get('embed', None)) for em in embeds]
+            embeds_after_mxc = [await maubot_parse_embed_images(self, em.get('embed', None), self.config.get("images", True)) for em in embeds]
             sendables = [SendableEmbed.to_sendable(eam) for eam in embeds_after_mxc]
             if number_of_results > 0:
                 sendables = sendables[:number_of_results]
@@ -87,7 +88,7 @@ class AnimeMangaBot(Plugin):
         if embeds:
             if number_of_results > 0:
                 embeds = embeds[:number_of_results]
-            embeds_after_mxc = [await maubot_parse_embed_images(self, em.get('embed', None)) for em in embeds]
+            embeds_after_mxc = [await maubot_parse_embed_images(self, em.get('embed', None), self.config.get("images", True)) for em in embeds]
             sendables = [SendableEmbed.to_sendable(eam) for eam in embeds_after_mxc]
             if number_of_results > 0:
                 sendables = sendables[:number_of_results]
@@ -111,7 +112,7 @@ class AnimeMangaBot(Plugin):
         if embeds:
             if number_of_results > 0:
                 embeds = embeds[:number_of_results]
-            embeds_after_mxc = [await maubot_parse_embed_images(self, em.get('embed', None)) for em in embeds]
+            embeds_after_mxc = [await maubot_parse_embed_images(self, em.get('embed', None), self.config.get("images", True)) for em in embeds]
             sendables = [SendableEmbed.to_sendable(eam) for eam in embeds_after_mxc]
             if number_of_results > 0:
                 sendables = sendables[:number_of_results]
@@ -133,7 +134,7 @@ class AnimeMangaBot(Plugin):
         if embeds:
             if number_of_results > 0:
                 embeds = embeds[:number_of_results]
-            embeds_after_mxc = [await maubot_parse_embed_images(self, em.get('embed', None)) for em in embeds]
+            embeds_after_mxc = [await maubot_parse_embed_images(self, em.get('embed', None), self.config.get("images", True)) for em in embeds]
             sendables = [SendableEmbed.to_sendable(eam) for eam in embeds_after_mxc]
             if number_of_results > 0:
                 sendables = sendables[:number_of_results]
@@ -142,7 +143,7 @@ class AnimeMangaBot(Plugin):
         no_results = SendableEmbed.to_sendable(maubot_embed_source(None))
         return await evt.respond(no_results, allow_html=True)
 
-    @command.new("bangumi", aliases=["番组", "番組", "番组计划", "番組計劃"], help="Search Bangumi. Type is \"anime\" or \"manga\". Light novel searches are categorized as \"manga\". Note: Results may be in non-English languages.")
+    @command.new("bangumi", aliases=["bgm", "番组", "番組", "番组计划", "番組計劃"], help="Search Bangumi. Type is \"anime\" or \"manga\". Light novel searches are categorized as \"manga\". Note: Results may be in non-English languages.")
     @command.argument("type")
     @command.argument("title", pass_raw=True)
     async def animemanga_bangumi(self, evt: MessageEvent, type: str, title: str) -> None:
@@ -155,15 +156,10 @@ class AnimeMangaBot(Plugin):
         if embeds:
             if number_of_results > 0:
                 embeds = embeds[:number_of_results]
-            embeds_after_mxc = [await maubot_parse_embed_images(self, em.get('embed', None)) for em in embeds]
+            embeds_after_mxc = [await maubot_parse_embed_images(self, em.get('embed', None), self.config.get("images", True)) for em in embeds]
             sendables = [SendableEmbed.to_sendable(eam) for eam in embeds_after_mxc]
             if number_of_results > 0:
                 sendables = sendables[:number_of_results]
             return await evt.respond(SendableMenuCollapsible.to_sendable(sendables), allow_html=True)
         no_results = SendableEmbed.to_sendable(maubot_embed_source(None))
         return await evt.respond(no_results, allow_html=True)
-
-    @command.new("batoto", help="Search Batoto")
-    @command.argument("title", pass_raw=True)
-    async def animemanga_batoto(self, evt: MessageEvent, title: str) -> None:
-        return await evt.respond("Batoto is permanently closed. This command will be removed in a future update. Learn more: https://coffeebank.github.io/coffee-maubot/animemanga/#notes")

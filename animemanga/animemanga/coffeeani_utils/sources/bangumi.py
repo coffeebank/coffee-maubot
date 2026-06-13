@@ -62,7 +62,7 @@ async def bangumi_search_anime_manga(bangumi_type, title):
     payload = SearchResult()
     payload.series_id = anime_manga.get("id", 0)
     payload.link = f"https://bgm.tv/subject/{payload.series_id}"
-    payload.title = anime_manga["name"] or anime_manga["name_cn"] or "No Title"
+    payload.title = anime_manga["name_cn"] or anime_manga["name"] or "No Title"
     payload.description = anime_manga.get("summary", None)
     payload.image_thumbnail = anime_manga.get("image", None)
     payload.external_links = bangumi_get_external_links(anime_manga, payload.link)
@@ -134,7 +134,7 @@ def bangumi_get_names(anime_manga):
   if names:
     names_infobox = [v["v"] for v in names["value"]]
 
-  names_full = [anime_manga.get("name_cn", None)] + names_infobox
+  names_full = [anime_manga.get("name", None)] + names_infobox
   names_send = filter(None, names_full)
   if anime_manga.get("name_cn", None) or names_infobox:
     return names_send

@@ -1,3 +1,4 @@
 results: 2
+images: True
 max_description_length: 200
 deepl_api: ""
