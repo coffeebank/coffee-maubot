@@ -143,7 +143,7 @@ class AnimeMangaBot(Plugin):
         no_results = SendableEmbed.to_sendable(maubot_embed_source(None))
         return await evt.respond(no_results, allow_html=True)
 
-    @command.new("bangumi", aliases=["番组", "番組", "番组计划", "番組計劃"], help="Search Bangumi. Type is \"anime\" or \"manga\". Light novel searches are categorized as \"manga\". Note: Results may be in non-English languages.")
+    @command.new("bangumi", aliases=["bgm", "番组", "番組", "番组计划", "番組計劃"], help="Search Bangumi. Type is \"anime\" or \"manga\". Light novel searches are categorized as \"manga\". Note: Results may be in non-English languages.")
     @command.argument("type")
     @command.argument("title", pass_raw=True)
     async def animemanga_bangumi(self, evt: MessageEvent, type: str, title: str) -> None:
